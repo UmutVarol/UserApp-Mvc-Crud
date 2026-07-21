@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using UserApp.Services;
 using UserApp.Entities;
 
@@ -9,54 +10,55 @@ namespace UserApp.Web.Controllers
         private readonly UserService _userService;
         public HomeController(UserService userService) { _userService = userService; }
 
-        public IActionResult Index() => View(_userService.GetAll());
+        public async Task<IActionResult> Index() => View(await _userService.GetAllAsync());
 
         public IActionResult Create() => View();
 
         [HttpPost]
-        public IActionResult Create(Kullanici kullanici)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Kullanici kullanici)
         {
-            // Validasyon (Doğrulama) Kontrolü
             if (!ModelState.IsValid) return View(kullanici); 
             
-            _userService.Add(kullanici);
-            return RedirectToAction("Index");
+            await _userService.AddAsync(kullanici);
+            return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var user = _userService.GetById(id);
+            var user = await _userService.GetByIdAsync(id);
             if (user == null) return NotFound();
             return View(user);
         }
 
         [HttpPost]
-        public IActionResult Edit(Kullanici kullanici)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Kullanici kullanici)
         {
-            // Validasyon (Doğrulama) Kontrolü
             if (!ModelState.IsValid) return View(kullanici); 
             
-            _userService.Update(kullanici);
-            return RedirectToAction("Index");
+            await _userService.UpdateAsync(kullanici);
+            return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var user = _userService.GetById(id);
+            var user = await _userService.GetByIdAsync(id);
             if (user == null) return NotFound();
             return View(user);
         }
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(int id)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            _userService.Delete(id);
-            return RedirectToAction("Index");
+            await _userService.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var user = _userService.GetById(id);
+            var user = await _userService.GetByIdAsync(id);
             if (user == null) return NotFound();
             return View(user);
         }
