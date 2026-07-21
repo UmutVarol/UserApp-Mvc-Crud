@@ -1,0 +1,28 @@
+@model UserApp.Entities.Kullanici
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-0 border-danger">
+                <div class="card-header bg-danger text-white text-center py-3">
+                    <h3 class="mb-0 fw-bold">Kullanıcı Silme Onayı</h3>
+                </div>
+                <div class="card-body p-4 text-center">
+                    <h5 class="text-danger mb-4">Bu kullanıcıyı silmek istediğinize emin misiniz?</h5>
+                    
+                    <ul class="list-group list-group-flush text-start mb-4 border">
+                        <li class="list-group-item"><strong>Ad:</strong> @Model.Ad</li>
+                        <li class="list-group-item"><strong>Soyad:</strong> @Model.Soyad</li>
+                        <li class="list-group-item"><strong>Email:</strong> @Model.Email</li>
+                        <li class="list-group-item"><strong>Departman:</strong> @Model.Departman</li>
+                    </ul>
+                    
+                    <form action="/Home/Delete/@Model.Id" method="post" class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <button type="submit" class="btn btn-danger btn-lg fw-bold px-5">Evet, Sil</button>
+                        <a href="/Home/Index" class="btn btn-secondary btn-lg px-4">Hayır, Geri Dön</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

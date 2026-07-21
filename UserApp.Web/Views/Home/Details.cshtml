@@ -1,0 +1,25 @@
+@model UserApp.Entities.Kullanici
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow border-0">
+                <div class="card-header bg-info text-white text-center py-3">
+                    <h3 class="mb-0 fw-bold">Kullanıcı Detayları</h3>
+                </div>
+                <div class="card-body p-4">
+                    <p><strong>ID:</strong> @Model.Id</p>
+                    <p><strong>Ad:</strong> @Model.Ad</p>
+                    <p><strong>Soyad:</strong> @Model.Soyad</p>
+                    <p><strong>Email:</strong> @Model.Email</p>
+                    <p><strong>Departman:</strong> <span class="badge bg-secondary">@Model.Departman</span></p>
+                    <hr />
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="/Home/Edit/@Model.Id" class="btn btn-warning fw-bold">Bu Kaydı Düzenle</a>
+                        <a href="/Home/Index" class="btn btn-light border">Listeye Geri Dön</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

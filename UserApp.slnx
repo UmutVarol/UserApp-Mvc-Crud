@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="UserApp.Data/UserApp.Data.csproj" />
+  <Project Path="UserApp.Entities/UserApp.Entities.csproj" />
+  <Project Path="UserApp.Services/UserApp.Services.csproj" />
+  <Project Path="UserApp.Web/UserApp.Web.csproj" />
+</Solution>
