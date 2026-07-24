@@ -8,10 +8,11 @@ using UserApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Veritabanı ve Servis bağlantıları
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddScoped<IKullaniciRepository, KullaniciRepository>();
+builder.Services.AddScoped<IDepartmanRepository, DepartmanRepository>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddControllersWithViews();
 

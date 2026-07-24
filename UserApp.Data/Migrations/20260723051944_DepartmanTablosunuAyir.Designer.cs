@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UserApp.Data;
 
@@ -10,9 +11,11 @@ using UserApp.Data;
 namespace UserApp.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260723051944_DepartmanTablosunuAyir")]
+    partial class DepartmanTablosunuAyir
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,36 +59,6 @@ namespace UserApp.Data.Migrations
                         {
                             Id = 4,
                             Ad = "Satış"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Ad = "Pazarlama"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Ad = "Ar-Ge"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Ad = "Hukuk"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Ad = "Lojistik"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Ad = "Müşteri Hizmetleri"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Ad = "Yönetim"
                         });
                 });
 

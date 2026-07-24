@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using UserApp.Data;
 using UserApp.Entities;
 
@@ -8,43 +5,36 @@ namespace UserApp.Services
 {
     public class UserService
     {
-        private readonly AppDbContext _context;
+        private readonly IKullaniciRepository _repository;
+        private readonly IDepartmanRepository _departmanRepository;
 
-        public UserService(AppDbContext context)
+        public UserService(IKullaniciRepository repository, IDepartmanRepository departmanRepository)
         {
-            _context = context;
+            _repository = repository;
+            _departmanRepository = departmanRepository;
         }
 
-        public async Task<List<Kullanici>> GetAllAsync()
-        {
-            return await _context.Kullanicilar.AsNoTracking().ToListAsync();
-        }
+        public Task<(List<Kullanici> Items, int TotalCount)> GetPagedAsync(string? searchTerm, string? sortBy, int page, int pageSize)
+            => _repository.GetPagedAsync(searchTerm, sortBy, page, pageSize);
 
-        public async Task<Kullanici?> GetByIdAsync(int id)
-        {
-            return await _context.Kullanicilar.FindAsync(id);
-        }
+        public Task<(int ToplamKullanici, int DepartmanSayisi, Kullanici? SonEklenen)> GetSummaryAsync()
+            => _repository.GetSummaryAsync();
 
-        public async Task AddAsync(Kullanici kullanici)
-        {
-            _context.Kullanicilar.Add(kullanici);
-            await _context.SaveChangesAsync();
-        }
+        public Task<Kullanici?> GetByIdAsync(int id) => _repository.GetByIdAsync(id);
 
-        public async Task UpdateAsync(Kullanici kullanici)
-        {
-            _context.Kullanicilar.Update(kullanici);
-            await _context.SaveChangesAsync();
-        }
+        public Task AddAsync(Kullanici kullanici) => _repository.AddAsync(kullanici);
+
+        public Task UpdateAsync(Kullanici kullanici) => _repository.UpdateAsync(kullanici);
 
         public async Task DeleteAsync(int id)
         {
-            var kullanici = await GetByIdAsync(id);
+            var kullanici = await _repository.GetByIdAsync(id);
             if (kullanici != null)
             {
-                _context.Kullanicilar.Remove(kullanici);
-                await _context.SaveChangesAsync();
+                await _repository.DeleteAsync(kullanici);
             }
         }
+
+        public Task<List<Departman>> GetDepartmanlarAsync() => _departmanRepository.GetAllAsync();
     }
 }

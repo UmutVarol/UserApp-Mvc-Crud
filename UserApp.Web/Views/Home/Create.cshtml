@@ -1,42 +1,44 @@
 @model UserApp.Entities.Kullanici
+@{ ViewData["Title"] = "Yeni Kullanıcı"; }
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow border-0">
-                <div class="card-header bg-success text-white text-center py-3">
-                    <h3 class="mb-0 fw-bold">Yeni Kullanıcı Kaydı</h3>
+<div class="breadcrumb-admin"><a asp-action="Index">Panel</a> / Yeni Kullanıcı</div>
+<h1 class="page-title">Yeni Kullanıcı Ekle</h1>
+
+<div class="admin-card">
+    <div class="admin-card-header">Genel Bilgiler</div>
+    <div class="admin-card-body">
+        <form asp-action="Create" method="post">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="Ad" class="form-label">Ad</label>
+                    <input asp-for="Ad" class="form-control" placeholder="Ad giriniz" />
+                    <span asp-validation-for="Ad" class="text-danger small fw-semibold"></span>
                 </div>
-                <div class="card-body p-4">
-                    <form asp-action="Create" method="post">
-                        <div class="mb-3">
-                            <label asp-for="Ad" class="form-label fw-bold">Ad</label>
-                            <input asp-for="Ad" class="form-control" placeholder="Ad giriniz" />
-                            <span asp-validation-for="Ad" class="text-danger small fw-bold"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Soyad" class="form-label fw-bold">Soyad</label>
-                            <input asp-for="Soyad" class="form-control" placeholder="Soyad giriniz" />
-                            <span asp-validation-for="Soyad" class="text-danger small fw-bold"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Email" class="form-label fw-bold">Email</label>
-                            <input asp-for="Email" class="form-control" placeholder="ornek@mail.com" />
-                            <span asp-validation-for="Email" class="text-danger small fw-bold"></span>
-                        </div>
-                        <div class="mb-4">
-                            <label asp-for="Departman" class="form-label fw-bold">Departman</label>
-                            <input asp-for="Departman" class="form-control" placeholder="Ör: IT, Muhasebe" />
-                            <span asp-validation-for="Departman" class="text-danger small fw-bold"></span>
-                        </div>
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-success btn-lg fw-bold">Kullanıcıyı Kaydet</button>
-                            <a asp-action="Index" class="btn btn-light border">Listeye Geri Dön</a>
-                        </div>
-                    </form>
+                <div class="col-md-6">
+                    <label asp-for="Soyad" class="form-label">Soyad</label>
+                    <input asp-for="Soyad" class="form-control" placeholder="Soyad giriniz" />
+                    <span asp-validation-for="Soyad" class="text-danger small fw-semibold"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <input asp-for="Email" class="form-control" placeholder="ornek@mail.com" />
+                    <span asp-validation-for="Email" class="text-danger small fw-semibold"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="DepartmanId" class="form-label">Departman</label>
+                    <select asp-for="DepartmanId" asp-items="ViewBag.Departmanlar" class="form-select">
+                        <option value="">-- Departman Seçiniz --</option>
+                    </select>
+                    <span asp-validation-for="DepartmanId" class="text-danger small fw-semibold"></span>
                 </div>
             </div>
-        </div>
+
+            <div class="d-flex gap-2 justify-content-end mt-4">
+                <a asp-action="Index" class="btn btn-admin-outline">Vazgeç</a>
+                <button type="submit" class="btn btn-admin-primary">Kaydet</button>
+            </div>
+        </form>
     </div>
 </div>
+
 @section Scripts { <partial name="_ValidationScriptsPartial" /> }

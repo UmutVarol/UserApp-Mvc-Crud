@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UserApp.Entities
 {
@@ -18,8 +19,10 @@ namespace UserApp.Entities
         [EmailAddress(ErrorMessage = "Geçerli bir email adresi giriniz.")]
         public string? Email { get; set; }
 
-        [Required(ErrorMessage = "Departman alanı boş bırakılamaz.")]
-        [StringLength(50, ErrorMessage = "Departman adı en fazla 50 karakter olabilir.")]
-        public string? Departman { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "Departman seçilmelidir.")]
+        public int DepartmanId { get; set; }
+
+        [ForeignKey(nameof(DepartmanId))]
+        public Departman? Departman { get; set; }
     }
 }

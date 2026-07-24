@@ -1,32 +1,27 @@
 @model UserApp.Entities.Kullanici
+@{ ViewData["Title"] = "Kullanıcıyı Sil"; }
 
-@{
-    ViewData["Title"] = "Kullanıcı Silme Onayı";
-}
+<div class="breadcrumb-admin"><a asp-action="Index">Panel</a> / Sil</div>
+<h1 class="page-title">Kullanıcıyı Sil</h1>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow border-0 border-danger">
-                <div class="card-header bg-danger text-white text-center py-3">
-                    <h3 class="mb-0 fw-bold">Kullanıcı Silme Onayı</h3>
-                </div>
-                <div class="card-body p-4 text-center">
-                    <h5 class="text-danger mb-4">Bu kullanıcıyı silmek istediğinize emin misiniz?</h5>
-
-                    <ul class="list-group list-group-flush text-start mb-4 border">
-                        <li class="list-group-item"><strong>Ad:</strong> @Model.Ad</li>
-                        <li class="list-group-item"><strong>Soyad:</strong> @Model.Soyad</li>
-                        <li class="list-group-item"><strong>Email:</strong> @Model.Email</li>
-                        <li class="list-group-item"><strong>Departman:</strong> @Model.Departman</li>
-                    </ul>
-
-                    <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="d-grid gap-2 d-md-flex justify-content-md-center">
-                        <button type="submit" class="btn btn-danger btn-lg fw-bold px-5">Evet, Sil</button>
-                        <a asp-action="Index" class="btn btn-secondary btn-lg px-4">Hayır, Geri Dön</a>
-                    </form>
-                </div>
-            </div>
+<div class="admin-card" style="max-width:480px;">
+    <div class="admin-card-body text-center p-4">
+        <div class="warn-icon-plain">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 3l10 18H2L12 3z"/><path d="M12 10v4"/><circle cx="12" cy="17" r=".5" fill="currentColor"/>
+            </svg>
         </div>
+        <h5 class="mb-2">"@Model.Ad @Model.Soyad" silinsin mi?</h5>
+        <p class="text-muted mb-4">Bu işlem geri alınamaz.</p>
+
+        <div class="text-start mb-4">
+            <div class="info-row"><span class="info-label">Email</span><span class="info-value">@Model.Email</span></div>
+            <div class="info-row"><span class="info-label">Departman</span><span class="info-value">@Model.Departman?.Ad</span></div>
+        </div>
+
+        <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="d-grid gap-2">
+            <button type="submit" class="btn btn-admin-danger">Evet, Kalıcı Olarak Sil</button>
+            <a asp-action="Index" class="btn btn-admin-outline">Vazgeç</a>
+        </form>
     </div>
 </div>

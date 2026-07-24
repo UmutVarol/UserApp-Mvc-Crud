@@ -1,43 +1,43 @@
 @model UserApp.Entities.Kullanici
+@{ ViewData["Title"] = "Kullanıcıyı Düzenle"; }
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow border-0">
-                <div class="card-header bg-warning text-dark text-center py-3">
-                    <h3 class="mb-0 fw-bold">Bilgileri Güncelle</h3>
+<div class="breadcrumb-admin"><a asp-action="Index">Panel</a> / Düzenle</div>
+<h1 class="page-title">Kullanıcıyı Düzenle</h1>
+
+<div class="admin-card">
+    <div class="admin-card-header">Genel Bilgiler</div>
+    <div class="admin-card-body">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="Ad" class="form-label">Ad</label>
+                    <input asp-for="Ad" class="form-control" />
+                    <span asp-validation-for="Ad" class="text-danger small fw-semibold"></span>
                 </div>
-                <div class="card-body p-4">
-                    <form asp-action="Edit" method="post">
-                        <input type="hidden" asp-for="Id" />
-                        <div class="mb-3">
-                            <label asp-for="Ad" class="form-label fw-bold">Ad</label>
-                            <input asp-for="Ad" class="form-control" />
-                            <span asp-validation-for="Ad" class="text-danger small fw-bold"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Soyad" class="form-label fw-bold">Soyad</label>
-                            <input asp-for="Soyad" class="form-control" />
-                            <span asp-validation-for="Soyad" class="text-danger small fw-bold"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Email" class="form-label fw-bold">Email</label>
-                            <input asp-for="Email" class="form-control" />
-                            <span asp-validation-for="Email" class="text-danger small fw-bold"></span>
-                        </div>
-                        <div class="mb-4">
-                            <label asp-for="Departman" class="form-label fw-bold">Departman</label>
-                            <input asp-for="Departman" class="form-control" />
-                            <span asp-validation-for="Departman" class="text-danger small fw-bold"></span>
-                        </div>
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-warning btn-lg fw-bold text-dark">Değişiklikleri Kaydet</button>
-                            <a asp-action="Index" class="btn btn-light border">Vazgeç ve Dön</a>
-                        </div>
-                    </form>
+                <div class="col-md-6">
+                    <label asp-for="Soyad" class="form-label">Soyad</label>
+                    <input asp-for="Soyad" class="form-control" />
+                    <span asp-validation-for="Soyad" class="text-danger small fw-semibold"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger small fw-semibold"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="DepartmanId" class="form-label">Departman</label>
+                    <select asp-for="DepartmanId" asp-items="ViewBag.Departmanlar" class="form-select"></select>
+                    <span asp-validation-for="DepartmanId" class="text-danger small fw-semibold"></span>
                 </div>
             </div>
-        </div>
+
+            <div class="d-flex gap-2 justify-content-end mt-4">
+                <a asp-action="Index" class="btn btn-admin-outline">Vazgeç</a>
+                <button type="submit" class="btn btn-admin-primary">Değişiklikleri Kaydet</button>
+            </div>
+        </form>
     </div>
 </div>
+
 @section Scripts { <partial name="_ValidationScriptsPartial" /> }
