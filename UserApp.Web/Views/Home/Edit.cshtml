@@ -1,4 +1,4 @@
-@model UserApp.Entities.Kullanici
+@model UserApp.Entities.Dtos.KullaniciEditDto
 @{ ViewData["Title"] = "Kullanıcıyı Düzenle"; }
 
 <div class="breadcrumb-admin"><a asp-action="Index">Panel</a> / Düzenle</div>
@@ -9,26 +9,24 @@
     <div class="admin-card-body">
         <form asp-action="Edit" method="post">
             <input type="hidden" asp-for="Id" />
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
             <div class="row g-3">
                 <div class="col-md-6">
                     <label asp-for="Ad" class="form-label">Ad</label>
                     <input asp-for="Ad" class="form-control" />
-                    <span asp-validation-for="Ad" class="text-danger small fw-semibold"></span>
                 </div>
                 <div class="col-md-6">
                     <label asp-for="Soyad" class="form-label">Soyad</label>
                     <input asp-for="Soyad" class="form-control" />
-                    <span asp-validation-for="Soyad" class="text-danger small fw-semibold"></span>
                 </div>
                 <div class="col-md-6">
                     <label asp-for="Email" class="form-label">Email</label>
                     <input asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email" class="text-danger small fw-semibold"></span>
                 </div>
                 <div class="col-md-6">
                     <label asp-for="DepartmanId" class="form-label">Departman</label>
                     <select asp-for="DepartmanId" asp-items="ViewBag.Departmanlar" class="form-select"></select>
-                    <span asp-validation-for="DepartmanId" class="text-danger small fw-semibold"></span>
                 </div>
             </div>
 
@@ -39,5 +37,3 @@
         </form>
     </div>
 </div>
-
-@section Scripts { <partial name="_ValidationScriptsPartial" /> }

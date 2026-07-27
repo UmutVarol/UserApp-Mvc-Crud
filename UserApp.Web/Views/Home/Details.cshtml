@@ -1,70 +1,20 @@
-@model UserApp.Entities.Kullanici
-@{ ViewData["Title"] = "Kullanıcı Detayları"; }
-@functions {
-    private static string InitialsColor(string? ad, string? soyad)
-    {
-        var seed = $"{ad}{soyad}";
-        int hash = 0;
-        foreach (var c in seed) { hash = (hash * 31 + c) % 360; }
-        var hue = ((hash % 360) + 360) % 360;
-        return $"linear-gradient(135deg, hsl({hue},70%,55%), hsl({(hue + 40) % 360},70%,45%))";
-    }
-    private static string Initials(string? ad, string? soyad)
-    {
-        var a = string.IsNullOrWhiteSpace(ad) ? "" : ad.Trim()[0].ToString();
-        var s = string.IsNullOrWhiteSpace(soyad) ? "" : soyad.Trim()[0].ToString();
-        return (a + s).ToUpperInvariant();
-    }
-}
+@model UserApp.Entities.Dtos.KullaniciDetailDto
+@{ ViewData["Title"] = "Kullanıcı Detayı"; }
 
-<div class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="surface-card overflow-hidden rise-in">
-                <div class="accent-bar info"></div>
-                <div class="p-4">
-                    <div class="beam-avatar" style="background:@InitialsColor(Model.Ad, Model.Soyad)">
-                        @Initials(Model.Ad, Model.Soyad)
-                    </div>
-                    <h3 class="text-center beam-title" style="font-size:1.4rem;">@Model.Ad @Model.Soyad</h3>
-                    <p class="text-center text-muted mb-4" style="font-family:'JetBrains Mono',monospace; font-size:.85rem;">@Model.Email</p>
+<div class="breadcrumb-admin"><a asp-action="Index">Panel</a> / Detay</div>
+<h1 class="page-title">@Model.Ad @Model.Soyad</h1>
 
-                    <div class="info-row">
-                        <div class="info-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 6l9 6 9-6"/></svg>
-                        </div>
-                        <div>
-                            <div class="info-label">Email</div>
-                            <div class="info-value">@Model.Email</div>
-                        </div>
-                    </div>
+<div class="admin-card" style="max-width:520px;">
+    <div class="admin-card-header">Kullanıcı Bilgileri</div>
+    <div class="admin-card-body">
+        <div class="info-row"><span class="info-label">Ad Soyad</span><span class="info-value">@Model.Ad @Model.Soyad</span></div>
+        <div class="info-row"><span class="info-label">Email</span><span class="info-value">@Model.Email</span></div>
+        <div class="info-row"><span class="info-label">Departman</span><span class="dept-pill">@Model.DepartmanAdi</span></div>
+        <div class="info-row"><span class="info-label">Kayıt No</span><span class="info-value">#@Model.Id</span></div>
 
-                    <div class="info-row">
-                        <div class="info-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12h8M8 16h5"/></svg>
-                        </div>
-                        <div>
-                            <div class="info-label">Departman</div>
-                            <div class="info-value">@Model.Departman?.Ad</div>
-                        </div>
-                    </div>
-
-                    <div class="info-row">
-                        <div class="info-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
-                        </div>
-                        <div>
-                            <div class="info-label">Kayıt No</div>
-                            <div class="info-value">#@Model.Id</div>
-                        </div>
-                    </div>
-
-                    <div class="sticky-actions d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-beam warning">Bu Kaydı Düzenle</a>
-                        <a asp-action="Index" class="btn btn-ghost">Listeye Geri Dön</a>
-                    </div>
-                </div>
-            </div>
+        <div class="d-flex gap-2 justify-content-end mt-4">
+            <a asp-action="Index" class="btn btn-admin-outline">Listeye Dön</a>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-admin-primary">Düzenle</a>
         </div>
     </div>
 </div>

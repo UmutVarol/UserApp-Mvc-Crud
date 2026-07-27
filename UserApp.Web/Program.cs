@@ -3,8 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using FluentValidation;
 using UserApp.Data;
 using UserApp.Services;
+using UserApp.Services.Validation;
+using UserApp.Entities.Dtos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IKullaniciRepository, KullaniciRepository>();
 builder.Services.AddScoped<IDepartmanRepository, DepartmanRepository>();
+builder.Services.AddScoped<IValidator<KullaniciCreateDto>, KullaniciCreateDtoValidator>();
+builder.Services.AddScoped<IValidator<KullaniciEditDto>, KullaniciEditDtoValidator>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddControllersWithViews();
 

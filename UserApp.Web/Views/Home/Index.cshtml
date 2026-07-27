@@ -22,7 +22,7 @@
     </div>
     <div class="col-12 col-md-4">
         <div class="stat-card">
-            <div class="stat-value" style="font-size:1.1rem;">@(Model.SonEklenen != null ? $"{Model.SonEklenen.Ad} {Model.SonEklenen.Soyad}" : "—")</div>
+            <div class="stat-value" style="font-size:1.1rem;">@(Model.SonEklenenAdSoyad ?? "—")</div>
             <div class="stat-label">Son Eklenen</div>
         </div>
     </div>
@@ -67,7 +67,7 @@
                     <tr>
                         <td class="ps-4 fw-semibold">@item.Ad @item.Soyad</td>
                         <td class="text-muted">@item.Email</td>
-                        <td><span class="dept-pill">@item.Departman?.Ad</span></td>
+                        <td><span class="dept-pill">@item.DepartmanAdi</span></td>
                         <td class="text-end pe-4">
                             <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-admin-outline btn-sm me-1">Düzenle</a>
                             <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-admin-outline btn-sm me-1">Detay</a>
@@ -96,7 +96,7 @@
                         <div class="fw-semibold">@item.Ad @item.Soyad</div>
                         <div class="text-muted small">@item.Email</div>
                     </div>
-                    <span class="dept-pill flex-shrink-0">@item.Departman?.Ad</span>
+                    <span class="dept-pill flex-shrink-0">@item.DepartmanAdi</span>
                 </div>
                 <div class="d-flex gap-2 mt-3">
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-admin-outline btn-sm flex-fill">Düzenle</a>

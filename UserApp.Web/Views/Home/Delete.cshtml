@@ -1,4 +1,4 @@
-@model UserApp.Entities.Kullanici
+@model UserApp.Entities.Dtos.KullaniciDetailDto
 @{ ViewData["Title"] = "Kullanıcıyı Sil"; }
 
 <div class="breadcrumb-admin"><a asp-action="Index">Panel</a> / Sil</div>
@@ -16,7 +16,7 @@
 
         <div class="text-start mb-4">
             <div class="info-row"><span class="info-label">Email</span><span class="info-value">@Model.Email</span></div>
-            <div class="info-row"><span class="info-label">Departman</span><span class="info-value">@Model.Departman?.Ad</span></div>
+            <div class="info-row"><span class="info-label">Departman</span><span class="info-value">@Model.DepartmanAdi</span></div>
         </div>
 
         <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="d-grid gap-2">

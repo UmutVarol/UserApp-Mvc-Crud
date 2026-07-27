@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using UserApp.Services;
-using UserApp.Entities;
+using UserApp.Entities.Dtos;
 using UserApp.Web.Models;
 
 namespace UserApp.Web.Controllers
@@ -21,7 +21,7 @@ namespace UserApp.Web.Controllers
             if (page < 1) page = 1;
 
             var (items, totalCount) = await _userService.GetPagedAsync(q, sort, page, PageSize);
-            var (toplam, departmanSayisi, sonEklenen) = await _userService.GetSummaryAsync();
+            var (toplam, departmanSayisi, sonEklenenAdSoyad) = await _userService.GetSummaryAsync();
 
             var vm = new KullaniciListViewModel
             {
@@ -33,7 +33,7 @@ namespace UserApp.Web.Controllers
                 SortBy = sort,
                 ToplamKullanici = toplam,
                 DepartmanSayisi = departmanSayisi,
-                SonEklenen = sonEklenen
+                SonEklenenAdSoyad = sonEklenenAdSoyad
             };
 
             return View(vm);
@@ -42,45 +42,51 @@ namespace UserApp.Web.Controllers
         public async Task<IActionResult> Create()
         {
             await PopulateDepartmanlarAsync();
-            return View();
+            return View(new KullaniciCreateDto());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Kullanici kullanici)
+        public async Task<IActionResult> Create(KullaniciCreateDto dto)
         {
-            if (!ModelState.IsValid)
+            var result = await _userService.AddAsync(dto);
+            if (!result.Success)
             {
-                await PopulateDepartmanlarAsync(kullanici.DepartmanId);
-                return View(kullanici);
+                foreach (var error in result.Errors)
+                    ModelState.AddModelError(string.Empty, error);
+
+                await PopulateDepartmanlarAsync(dto.DepartmanId);
+                return View(dto);
             }
 
-            await _userService.AddAsync(kullanici);
-            TempData["ToastMessage"] = $"{kullanici.Ad} {kullanici.Soyad} başarıyla eklendi.";
+            TempData["ToastMessage"] = $"{dto.Ad} {dto.Soyad} başarıyla eklendi.";
             TempData["ToastType"] = "success";
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(int id)
         {
-            var user = await _userService.GetByIdAsync(id);
-            if (user == null) return NotFound();
+            var dto = await _userService.GetForEditAsync(id);
+            if (dto == null) return NotFound();
 
-            await PopulateDepartmanlarAsync(user.DepartmanId);
-            return View(user);
+            await PopulateDepartmanlarAsync(dto.DepartmanId);
+            return View(dto);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Kullanici kullanici)
+        public async Task<IActionResult> Edit(KullaniciEditDto dto)
         {
-            if (!ModelState.IsValid)
+            var result = await _userService.UpdateAsync(dto);
+            if (!result.Success)
             {
-                await PopulateDepartmanlarAsync(kullanici.DepartmanId);
-                return View(kullanici);
+                foreach (var error in result.Errors)
+                    ModelState.AddModelError(string.Empty, error);
+
+                await PopulateDepartmanlarAsync(dto.DepartmanId);
+                return View(dto);
             }
 
-            await _userService.UpdateAsync(kullanici);
             TempData["ToastMessage"] = "Değişiklikler kaydedildi.";
             TempData["ToastType"] = "success";
             return RedirectToAction(nameof(Index));
@@ -88,9 +94,9 @@ namespace UserApp.Web.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var user = await _userService.GetByIdAsync(id);
-            if (user == null) return NotFound();
-            return View(user);
+            var dto = await _userService.GetDetailAsync(id);
+            if (dto == null) return NotFound();
+            return View(dto);
         }
 
         [HttpPost, ActionName("Delete")]
@@ -105,9 +111,9 @@ namespace UserApp.Web.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var user = await _userService.GetByIdAsync(id);
-            if (user == null) return NotFound();
-            return View(user);
+            var dto = await _userService.GetDetailAsync(id);
+            if (dto == null) return NotFound();
+            return View(dto);
         }
 
         private async Task PopulateDepartmanlarAsync(int? selectedId = null)
