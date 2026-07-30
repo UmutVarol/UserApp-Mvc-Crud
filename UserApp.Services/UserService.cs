@@ -5,6 +5,11 @@ using UserApp.Entities.Dtos;
 
 namespace UserApp.Services
 {
+    /// <summary>
+    /// Kullanıcı yönetiminin iş mantığını (BLL) yürütür: doğrulama, email benzersizlik
+    /// kontrolü ve DTO ↔ Entity dönüşümlerini üstlenir. Controller, bu sınıf dışında
+    /// hiçbir Repository'yi doğrudan görmez.
+    /// </summary>
     public class UserService
     {
         private readonly IKullaniciRepository _repository;
@@ -80,8 +85,17 @@ namespace UserApp.Services
         public async Task<ServiceResult> AddAsync(KullaniciCreateDto dto)
         {
             var validation = await _createValidator.ValidateAsync(dto);
-            if (!validation.IsValid)
-                return ServiceResult.Fail(validation.Errors.Select(e => e.ErrorMessage));
+            var errors = validation.Errors.Select(e => e.ErrorMessage).ToList();
+
+            // Format kuralları (regex, boş kontrolü) geçse bile email zaten
+            // kullanımdaysa ayrı bir iş kuralı olarak burada yakalıyoruz.
+            if (!string.IsNullOrWhiteSpace(dto.Email) && await _repository.EmailExistsAsync(dto.Email))
+            {
+                errors.Add("Bu email adresi zaten kayıtlı. Aynı email ile birden fazla kullanıcı oluşturulamaz.");
+            }
+
+            if (errors.Any())
+                return ServiceResult.Fail(errors);
 
             var kullanici = new Kullanici
             {
@@ -98,8 +112,17 @@ namespace UserApp.Services
         public async Task<ServiceResult> UpdateAsync(KullaniciEditDto dto)
         {
             var validation = await _editValidator.ValidateAsync(dto);
-            if (!validation.IsValid)
-                return ServiceResult.Fail(validation.Errors.Select(e => e.ErrorMessage));
+            var errors = validation.Errors.Select(e => e.ErrorMessage).ToList();
+
+            // excludeId: dto.Id → kullanıcı kendi mevcut email'ini değiştirmeden
+            // kaydettiğinde "email zaten kullanımda" hatası almasın diye kendi kaydı hariç tutuluyor.
+            if (!string.IsNullOrWhiteSpace(dto.Email) && await _repository.EmailExistsAsync(dto.Email, dto.Id))
+            {
+                errors.Add("Bu email adresi zaten başka bir kullanıcıda kayıtlı.");
+            }
+
+            if (errors.Any())
+                return ServiceResult.Fail(errors);
 
             var kullanici = new Kullanici
             {

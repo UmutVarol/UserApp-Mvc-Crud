@@ -1,9 +1,9 @@
 namespace UserApp.Entities
 {
-    /// DAL katmanının konuştuğu saf model. Doğrulama kuralları ve ekran bazlı
-    /// veri şekilleri burada değil, Dtos/ altındaki DTO sınıflarında ve
-    /// UserApp.Services/Validation altındaki FluentValidation kurallarında yer alır.
-    /// Şema kısıtları (Required/MaxLength/FK) ise AppDbContext.OnModelCreating içinde tanımlıdır.
+    /// <summary>
+    /// DAL (Veri Erişim Katmanı) katmanının konuştuğu saf model. 
+    /// Veritabanındaki 'Kullanicilar' tablosunun C# tarafındaki birebir karşılığıdır.
+    /// </summary>
     public class Kullanici
     {
         public int Id { get; set; }
@@ -12,5 +12,24 @@ namespace UserApp.Entities
         public string? Email { get; set; }
         public int DepartmanId { get; set; }
         public Departman? Departman { get; set; }
+
+        /// <summary>
+        /// Kullanıcının sistemde aktif mi yoksa pasif mi olduğunu tutar.
+        /// Yeni eklenen bir kullanıcı varsayılan olarak aktiftir (true).
+        /// </summary>
+        public bool IsActive { get; set; } = true;
+
+        /// <summary>
+        /// Soft Delete (Yumuşak Silme) işlemi için kullanılır. 
+        /// Kullanıcı silindiğinde veritabanından tamamen uçurulmaz, bu değer 'true' yapılır.
+        /// </summary>
+        public bool IsDeleted { get; set; } = false;
+
+        /// <summary>
+        /// Kullanıcının profil fotoğrafının sunucudaki (wwwroot içindeki) dosya yolunu tutar.
+        /// Örn: "/uploads/profiles/ahmet.jpg". 
+        /// Resmin kendisini (byte olarak) değil, sadece yolunu (string olarak) veritabanında saklarız.
+        /// </summary>
+        public string? ProfileImagePath { get; set; }
     }
 }

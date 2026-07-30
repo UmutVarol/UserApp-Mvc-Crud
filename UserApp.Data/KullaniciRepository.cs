@@ -71,6 +71,15 @@ namespace UserApp.Data
                 .Include(k => k.Departman)
                 .FirstOrDefaultAsync(k => k.Id == id);
 
+        public async Task<bool> EmailExistsAsync(string email, int? excludeId = null)
+        {
+            var normalized = email.Trim().ToLower();
+            return await _context.Kullanicilar
+                .AnyAsync(k => k.Email != null
+                             && k.Email.ToLower() == normalized
+                             && (excludeId == null || k.Id != excludeId));
+        }
+
         public async Task AddAsync(Kullanici kullanici)
         {
             _context.Kullanicilar.Add(kullanici);

@@ -20,7 +20,7 @@ builder.Services.AddScoped<IValidator<KullaniciCreateDto>, KullaniciCreateDtoVal
 builder.Services.AddScoped<IValidator<KullaniciEditDto>, KullaniciEditDtoValidator>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddScoped<IFileHelper, FileHelper>();
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
