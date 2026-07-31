@@ -5,6 +5,33 @@ const KullaniciTableModule = (function () {
     let _dataTableInstance = null;
     let _$table = null;
 
+    // YENİ: HER TÜRLÜ BOZUK YOLU (~, BOŞLUK, FİZİKSEL) TEMİZLEYEN KESİN ÇÖZÜM
+    const _resolveImagePath = function (rawPath, ad, soyad) {
+        if (rawPath && rawPath.trim() !== "" && rawPath !== "undefined" && rawPath !== "null") {
+            let cleanPath = rawPath.trim().replace(/\\/g, '/');
+            
+            if (cleanPath.startsWith('~')) {
+                cleanPath = cleanPath.substring(1); 
+            }
+            
+            const wwwrootIndex = cleanPath.indexOf('wwwroot');
+            if (wwwrootIndex !== -1) {
+                cleanPath = cleanPath.substring(wwwrootIndex + 7);
+            }
+
+            if (!cleanPath.startsWith('http') && !cleanPath.startsWith('/')) {
+                cleanPath = '/' + cleanPath;
+            }
+            
+            console.log("Çözümlenen Resim Yolu:", cleanPath);
+            return cleanPath;
+        }
+        
+        const safeAd = ad || 'K';
+        const safeSoyad = soyad || 'U';
+        return `https://ui-avatars.com/api/?name=${safeAd}+${safeSoyad}&background=random&color=fff`;
+    };
+
     const _initializeTable = function (config) {
         _$table = $(config.tableSelector);
         const ajaxEndpoint = _$table.data('url');
@@ -43,11 +70,11 @@ const KullaniciTableModule = (function () {
             { 
                 "data": null,
                 "render": function (data, type, row) {
-                    const rowData = encodeURIComponent(JSON.stringify(row));
+                    // DEV MİMARİ DEĞİŞİKLİĞİ: Tüm satır verisini (data-row) taşımıyoruz! Sadece ID taşıyoruz.
                     return `
                         <div class="d-flex gap-1 ps-2">
                             <a href="/Home/Edit/${row.id}" class="btn btn-admin-outline btn-sm">Düzenle</a>
-                            <button type="button" class="btn btn-admin-outline btn-sm btn-detay" data-row="${rowData}">Detay</button>
+                            <button type="button" class="btn btn-admin-outline btn-sm btn-detay" data-id="${row.id}">Detay</button>
                             <button type="button" class="btn btn-admin-danger-soft btn-sm" 
                                     data-bs-toggle="modal" data-bs-target="#deleteModal" 
                                     data-id="${row.id}" data-name="${row.ad || row.Ad} ${row.soyad || row.Soyad}">Sil</button>
@@ -57,14 +84,16 @@ const KullaniciTableModule = (function () {
                 "orderable": false,
                 "searchable": false
             },
-            // 2. Sütun: Ad Soyad (Solunda küçük yuvarlak profil fotoğrafı / harf logosu ile birlikte)
+            // 2. Sütun: Ad Soyad (Solunda küçük yuvarlak profil fotoğrafı / harf logosu)
             { 
                 "data": null,
                 "render": function(data, type, row) { 
                     const ad = row.ad || row.Ad || "";
                     const soyad = row.soyad || row.Soyad || "";
                     const imgPath = row.profileImagePath || row.ProfileImagePath;
-                    const imgSrc = imgPath ? imgPath : `https://ui-avatars.com/api/?name=${ad}+${soyad}&background=random&color=fff`;
+                    
+                    // YENİ: Çözümleyiciyi kullanarak hatasız yolu alıyoruz
+                    const imgSrc = _resolveImagePath(imgPath, ad, soyad);
 
                     return `
                         <div class="d-flex align-items-center gap-2">
@@ -111,34 +140,39 @@ const KullaniciTableModule = (function () {
     };
 
     const _bindEvents = function (config) {
+        // DETAY BUTONUNA TIKLANDIĞINDA ÇALIŞAN YENİ AJAX KODU
         _$table.find('tbody').on('click', '.btn-detay', function () {
-            const rowData = JSON.parse(decodeURIComponent($(this).attr('data-row')));
-            
-            // Verileri Hazırlama
-            const imgPath = rowData.profileImagePath || rowData.ProfileImagePath;
-            const ad = rowData.ad || rowData.Ad || "";
-            const soyad = rowData.soyad || rowData.Soyad || "";
-            const fallbackSrc = imgPath ? imgPath : `https://ui-avatars.com/api/?name=${ad}+${soyad}&background=random&color=fff`;
-            
-            // SOL TARAF (Fotoğraf ve Özet)
-            $('#modalProfileImage').attr('src', fallbackSrc);
-            $('#modalAdSoyadTitle').text(ad + " " + soyad);
-            $('#modalDepartmanBadge').text(rowData.departmanAd || rowData.DepartmanAd || "");
-
-            // SAĞ TARAF (Detaylı Liste)
-            $('#modalAdSoyad').text(ad + " " + soyad);
-            $('#modalEmail').text(rowData.email || rowData.Email || "");
-            $('#modalDepartman').text(rowData.departmanAd || rowData.DepartmanAd || "");
-            $('#modalKayitTarihi').text(rowData.kayitTarihi || rowData.KayitTarihi || "");
-            
-            const isActive = (rowData.isActive !== undefined) ? rowData.isActive : rowData.IsActive;
-            $('#modalDurum').text(isActive ? "Aktif" : "Pasif");
-            
-            // Modalı Göster
+            const userId = $(this).data('id');
             const detayModal = new bootstrap.Modal(document.querySelector(config.modalSelector));
-            detayModal.show();
+            
+            // Sunucudan o an için TAZE veriyi çekiyoruz (AJAX)
+            $.getJSON(`/Home/GetDetailJson/${userId}`)
+                .done(function (data) {
+                    
+                    // YENİ: Çözümleyiciyi kullanarak hatasız yolu alıyoruz
+                    const fallbackSrc = _resolveImagePath(data.profileImagePath, data.ad, data.soyad);
+                    
+                    // SOL TARAF (Fotoğraf ve Özet)
+                    $('#modalProfileImage').attr('src', fallbackSrc);
+                    $('#modalAdSoyadTitle').text(data.adSoyad);
+                    $('#modalDepartmanBadge').text(data.departmanAd);
+
+                    // SAĞ TARAF (Detaylı Liste)
+                    $('#modalAdSoyad').text(data.adSoyad);
+                    $('#modalEmail').text(data.email);
+                    $('#modalDepartman').text(data.departmanAd);
+                    $('#modalKayitTarihi').text(data.kayitTarihi);
+                    $('#modalDurum').text(data.isActive ? "Aktif" : "Pasif");
+
+                    detayModal.show();
+                })
+                .fail(function () {
+                    console.error("HATA: Kullanıcı detayı alınamadı, ID:", userId);
+                    alert("Kullanıcı detayları getirilirken bir hata oluştu.");
+                });
         });
 
+        // SİLME MODALI İŞLEMLERİ
         const deleteModal = document.querySelector(config.deleteModalSelector);
         if (deleteModal) {
             deleteModal.addEventListener('show.bs.modal', event => {
@@ -148,3 +182,11 @@ const KullaniciTableModule = (function () {
             });
         }
     };
+
+    return {
+        init: function (config) {
+            _initializeTable(config);
+            _bindEvents(config);
+        }
+    };
+})();

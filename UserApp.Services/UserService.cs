@@ -54,23 +54,23 @@ namespace UserApp.Services
             string? sonEklenenAdSoyad = sonEklenen != null ? $"{sonEklenen.Ad} {sonEklenen.Soyad}" : null;
             return (toplam, departmanSayisi, sonEklenenAdSoyad);
         }
+public async Task<KullaniciDetailDto?> GetDetailAsync(int id)
+{
+    var kullanici = await _repository.GetByIdAsync(id);
+    if (kullanici == null) return null;
 
-        public async Task<KullaniciDetailDto?> GetDetailAsync(int id)
-        {
-            var kullanici = await _repository.GetByIdAsync(id);
-            if (kullanici == null) return null;
-
-            return new KullaniciDetailDto
-            {
-                Id = kullanici.Id,
-                Ad = kullanici.Ad ?? "",
-                Soyad = kullanici.Soyad ?? "",
-                Email = kullanici.Email ?? "",
-                DepartmanAdi = kullanici.Departman?.Ad ?? "",
-                ProfileImagePath = kullanici.ProfileImagePath // Detay popup'ında resmi göstermek için DTO'ya eklendiğinde açılacak
-            };
-        }
-
+    return new KullaniciDetailDto
+    {
+        Id = kullanici.Id,
+        Ad = kullanici.Ad ?? "",
+        Soyad = kullanici.Soyad ?? "",
+        Email = kullanici.Email ?? "",
+        DepartmanAdi = kullanici.Departman?.Ad ?? "",
+        ProfileImagePath = kullanici.ProfileImagePath,
+        KayitTarihi = kullanici.KayitTarihi,
+        IsActive = kullanici.IsActive
+    };
+}
         public async Task<KullaniciEditDto?> GetForEditAsync(int id)
         {
             var kullanici = await _repository.GetByIdAsync(id);

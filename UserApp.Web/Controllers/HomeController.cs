@@ -52,7 +52,6 @@ namespace UserApp.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(KullaniciCreateDto dto)
         {
-            // _env.WebRootPath ile sunucunun "wwwroot" klasörünün yolunu gönderiyoruz
             var result = await _userService.AddAsync(dto, _env.WebRootPath);
             if (!result.Success)
             {
@@ -81,7 +80,6 @@ namespace UserApp.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(KullaniciEditDto dto)
         {
-            // _env.WebRootPath ile sunucunun "wwwroot" klasörünün yolunu gönderiyoruz
             var result = await _userService.UpdateAsync(dto, _env.WebRootPath);
             if (!result.Success)
             {
@@ -145,5 +143,27 @@ namespace UserApp.Web.Controllers
 
             return Json(new { data = jsonVeri });
         }
+/// "Detay" butonuna tıklandığında JS'in çağırdığı endpoint. Tarayıcıya önceden
+/// gömülmüş veri yerine, o an DB'den taze çekilen tek kullanıcının bilgisini
+/// JSON olarak döner. Bu sayede liste satırlarının HTML'inde artık yalnızca
+/// id/ad/soyad gibi asgari bilgi taşınır, hassas alanlar (email, foto, durum)
+/// yalnızca kullanıcı gerçekten "Detay"a bastığında sunucudan çekilir.
+[HttpGet]
+public async Task<IActionResult> GetDetailJson(int id)
+{
+    var dto = await _userService.GetDetailAsync(id);
+    if (dto == null) return NotFound();
+
+    return Json(new
+    {
+        id = dto.Id,
+        adSoyad = $"{dto.Ad} {dto.Soyad}",
+        email = dto.Email,
+        departmanAd = dto.DepartmanAdi,
+        kayitTarihi = dto.KayitTarihi.ToString("dd.MM.yyyy HH:mm"),
+        isActive = dto.IsActive,
+        profileImagePath = dto.ProfileImagePath
+    });
+}
     }
 }

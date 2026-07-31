@@ -8,5 +8,8 @@ namespace UserApp.Entities.Dtos
         public string Email { get; set; } = string.Empty;
         public string DepartmanAdi { get; set; } = string.Empty;
         public string? ProfileImagePath { get; set; }
+
+        public DateTime KayitTarihi { get; set; }
+        public bool IsActive { get; set; }
     }
 }
