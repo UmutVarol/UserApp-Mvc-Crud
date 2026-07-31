@@ -7,9 +7,31 @@
 <div class="admin-card">
     <div class="admin-card-header">Genel Bilgiler</div>
     <div class="admin-card-body">
-        <form asp-action="Edit" method="post">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="Id" />
             <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+            <div class="row g-3 align-items-center mb-3">
+                <!-- MEVCUT FOTOĞRAF ÖNİZLEMESİ -->
+                <div class="col-md-3 text-center">
+                    <div class="mb-2">
+                        <span class="text-muted small d-block mb-1">Mevcut Fotoğraf</span>
+                        @{
+                            var avatarSrc = !string.IsNullOrEmpty(Model.ProfileImagePath) 
+                                ? Model.ProfileImagePath 
+                                : $"https://ui-avatars.com/api/?name={Model.Ad}+{Model.Soyad}&background=random&color=fff";
+                        }
+                        <img src="@avatarSrc" class="rounded-circle shadow-sm" style="width: 80px; height: 80px; object-fit: cover; border: 2px solid #dee2e6;" alt="Avatar" />
+                    </div>
+                </div>
+
+                <!-- DOSYA SEÇME ALANI -->
+                <div class="col-md-9">
+                    <label asp-for="ProfileImage" class="form-label fw-bold">Profil Fotoğrafını Değiştir</label>
+                    <input asp-for="ProfileImage" type="file" class="form-control" accept="image/png, image/jpeg, image/jpg" />
+                    <div class="form-text text-muted">Yeni bir dosya seçmezseniz mevcut fotoğrafınız geçerli kalacaktır.</div>
+                </div>
+            </div>
 
             <div class="row g-3">
                 <div class="col-md-6">

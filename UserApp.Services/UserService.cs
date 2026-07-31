@@ -41,7 +41,8 @@ namespace UserApp.Services
                 Email = k.Email ?? "",
                 DepartmanAdi = k.Departman?.Ad ?? "",
                 KayitTarihi = k.KayitTarihi,
-             IsActive = k.IsActive
+                IsActive = k.IsActive,
+                ProfileImagePath = k.ProfileImagePath 
             }).ToList();
 
             return (dtoItems, totalCount);
@@ -65,7 +66,8 @@ namespace UserApp.Services
                 Ad = kullanici.Ad ?? "",
                 Soyad = kullanici.Soyad ?? "",
                 Email = kullanici.Email ?? "",
-                DepartmanAdi = kullanici.Departman?.Ad ?? ""
+                DepartmanAdi = kullanici.Departman?.Ad ?? "",
+                ProfileImagePath = kullanici.ProfileImagePath // Detay popup'ında resmi göstermek için DTO'ya eklendiğinde açılacak
             };
         }
 
@@ -80,22 +82,34 @@ namespace UserApp.Services
                 Ad = kullanici.Ad,
                 Soyad = kullanici.Soyad,
                 Email = kullanici.Email,
-                DepartmanId = kullanici.DepartmanId
+                DepartmanId = kullanici.DepartmanId,
+                ProfileImagePath = kullanici.ProfileImagePath // Düzenleme ekranında mevcut resmi göstermek için
             };
         }
-        /// Yeni bir kullanıcı ekler. Form kurallarını denetler ve 
-        /// Email'in başka biri tarafından kullanılıp kullanılmadığını kontrol eder.
-        /// Hata varsa ServiceResult.Fail, başarılıysa ServiceResult.Ok döner.
-        public async Task<ServiceResult> AddAsync(KullaniciCreateDto dto)
+
+        /// Yeni bir kullanıcı ekler. Form kurallarını denetler, Email benzersizliğini kontrol eder 
+        /// ve profil fotoğrafı varsa sunucuya yükleyip yolunu veritabanına kaydeder.
+        public async Task<ServiceResult> AddAsync(KullaniciCreateDto dto, string webRootPath)
         {
             var validation = await _createValidator.ValidateAsync(dto);
             var errors = validation.Errors.Select(e => e.ErrorMessage).ToList();
 
-            // Format kuralları (regex, boş kontrolü) geçse bile email zaten
-            // kullanımdaysa ayrı bir iş kuralı olarak burada yakalıyoruz.
             if (!string.IsNullOrWhiteSpace(dto.Email) && await _repository.EmailExistsAsync(dto.Email))
             {
                 errors.Add("Bu e-posta adresi ile daha önce kayıt olunmuş! Lütfen başka bir e-posta deneyin.");
+            }
+
+            // 1. FOTOĞRAF YÜKLEME İŞLEMİ 
+            string? kaydedilenFotoYolu = null;
+            if (dto.ProfileImage != null && dto.ProfileImage.Length > 0)
+            {
+                var uploadResult = await FileHelper.UploadProfileImageAsync(dto.ProfileImage, webRootPath);
+                if (!uploadResult.Success)
+                {
+                    errors.Add(uploadResult.ErrorMessage!);
+                    return ServiceResult.Fail(errors);
+                }
+                kaydedilenFotoYolu = uploadResult.FilePath;
             }
 
             if (errors.Any())
@@ -107,20 +121,23 @@ namespace UserApp.Services
                 Soyad = dto.Soyad,
                 Email = dto.Email,
                 DepartmanId = dto.DepartmanId,
-                KayitTarihi = DateTime.Now // İşe başlama anını (Şu an) DB'ye yazar.
+                KayitTarihi = DateTime.Now,
+                ProfileImagePath = kaydedilenFotoYolu // Fotoğrafın yolunu DB'ye kaydediyoruz
             };
 
             await _repository.AddAsync(kullanici);
             return ServiceResult.Ok();
         }
 
-        public async Task<ServiceResult> UpdateAsync(KullaniciEditDto dto)
+        /// <summary>
+        /// Mevcut kullanıcıyı günceller. Eğer yeni bir fotoğraf seçilmişse eskisinin üzerine 
+        /// klasörde yenisini oluşturur ve veritabanındaki yolu günceller.
+        /// </summary>
+        public async Task<ServiceResult> UpdateAsync(KullaniciEditDto dto, string webRootPath)
         {
             var validation = await _editValidator.ValidateAsync(dto);
             var errors = validation.Errors.Select(e => e.ErrorMessage).ToList();
 
-            // excludeId: dto.Id → kullanıcı kendi mevcut email'ini değiştirmeden
-            // kaydettiğinde "email zaten kullanımda" hatası almasın diye kendi kaydı hariç tutuluyor.
             if (!string.IsNullOrWhiteSpace(dto.Email) && await _repository.EmailExistsAsync(dto.Email, dto.Id))
             {
                 errors.Add("Bu Email adresi zaten başka bir kullanıcıda kayıtlı.");
@@ -129,16 +146,30 @@ namespace UserApp.Services
             if (errors.Any())
                 return ServiceResult.Fail(errors);
 
-           var kullanici = new Kullanici
-{
-    Id = dto.Id,
-    Ad = dto.Ad,
-    Soyad = dto.Soyad,
-    Email = dto.Email,
-    DepartmanId = dto.DepartmanId
- 
-};
-await _repository.UpdateAsync(kullanici);
+            // KRİTİK DÜZELTME: Verilerin (Tarih, Aktiflik) sıfırlanmaması için kaydı önce DB'den çekiyoruz
+            var mevcutKullanici = await _repository.GetByIdAsync(dto.Id);
+            if (mevcutKullanici == null)
+            {
+                return ServiceResult.Fail(new List<string> { "Güncellenmek istenen kullanıcı bulunamadı." });
+            }
+
+            // 1. FOTOĞRAF GÜNCELLEME İŞLEMİ (Sadece formdan yeni bir resim yüklendiyse tetiklenir)
+            if (dto.ProfileImage != null && dto.ProfileImage.Length > 0)
+            {
+                var uploadResult = await FileHelper.UploadProfileImageAsync(dto.ProfileImage, webRootPath);
+                if (!uploadResult.Success)
+                {
+                    return ServiceResult.Fail(new List<string> { uploadResult.ErrorMessage! });
+                }
+                mevcutKullanici.ProfileImagePath = uploadResult.FilePath; // Veritabanındaki yolu yeni resimle değiştir
+            }
+
+            mevcutKullanici.Ad = dto.Ad;
+            mevcutKullanici.Soyad = dto.Soyad;
+            mevcutKullanici.Email = dto.Email;
+            mevcutKullanici.DepartmanId = dto.DepartmanId;
+
+            await _repository.UpdateAsync(mevcutKullanici);
             return ServiceResult.Ok();
         }
 

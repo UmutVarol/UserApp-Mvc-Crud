@@ -7,10 +7,18 @@
 <div class="admin-card">
     <div class="admin-card-header">Genel Bilgiler</div>
     <div class="admin-card-body">
-        <form asp-action="Create" method="post">
+        <!-- enctype="multipart/form-data" eklendi: Bu olmadan dosya C# tarafına gidemez! -->
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="All" class="text-danger mb-3"></div>
 
             <div class="row g-3">
+                <!-- DOSYA YÜKLEME ALANI (accept filtresi ile sadece resim seçtirir) -->
+                <div class="col-12 mb-2">
+                    <label asp-for="ProfileImage" class="form-label fw-bold">Profil Fotoğrafı</label>
+                    <input asp-for="ProfileImage" type="file" class="form-control" accept="image/png, image/jpeg, image/jpg" />
+                    <div class="form-text text-muted">Maksimum 5 MB boyutunda, .jpg veya .png formatında resim yükleyebilirsiniz. (Zorunlu Değil)</div>
+                </div>
+
                 <div class="col-md-6">
                     <label asp-for="Ad" class="form-label">Ad</label>
                     <input asp-for="Ad" class="form-control" placeholder="Ad giriniz" />

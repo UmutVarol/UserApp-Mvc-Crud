@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Hosting;
 using UserApp.Services;
 using UserApp.Entities.Dtos;
 using UserApp.Web.Models;
@@ -9,11 +10,13 @@ namespace UserApp.Web.Controllers
     public class HomeController : Controller
     {
         private readonly UserService _userService;
+        private readonly IWebHostEnvironment _env; // Sunucu yolunu bulmamızı sağlayacak araç
         private const int PageSize = 8;
 
-        public HomeController(UserService userService)
+        public HomeController(UserService userService, IWebHostEnvironment env)
         {
             _userService = userService;
+            _env = env;
         }
 
         public async Task<IActionResult> Index(string? q, string? sort, int page = 1)
@@ -49,7 +52,8 @@ namespace UserApp.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(KullaniciCreateDto dto)
         {
-            var result = await _userService.AddAsync(dto);
+            // _env.WebRootPath ile sunucunun "wwwroot" klasörünün yolunu gönderiyoruz
+            var result = await _userService.AddAsync(dto, _env.WebRootPath);
             if (!result.Success)
             {
                 foreach (var error in result.Errors)
@@ -77,7 +81,8 @@ namespace UserApp.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(KullaniciEditDto dto)
         {
-            var result = await _userService.UpdateAsync(dto);
+            // _env.WebRootPath ile sunucunun "wwwroot" klasörünün yolunu gönderiyoruz
+            var result = await _userService.UpdateAsync(dto, _env.WebRootPath);
             if (!result.Success)
             {
                 foreach (var error in result.Errors)
@@ -121,25 +126,21 @@ namespace UserApp.Web.Controllers
             var departmanlar = await _userService.GetDepartmanlarAsync();
             ViewBag.Departmanlar = new SelectList(departmanlar, "Id", "Ad", selectedId);
         }
-
-        /// DataTables'ın AJAX ile arka plandan veri çekmesini sağlayan Endpoint.
-        /// Sayfa yenilenmeden tüm listeyi ve durumları JSON formatında döndürür.
-  
-        [HttpGet]
+[HttpGet]
         public async Task<IActionResult> GetKullanicilarJson()
         {
-            // DataTables'ın client-side (kendi içindeki JS) sıralamasını kullanması için listeyi çekiyoruz
             var (items, _) = await _userService.GetPagedAsync(null, null, 1, 1000);
 
             var jsonVeri = items.Select(k => new
             {
                 id = k.Id,
-                ad = k.Ad,
-                soyad = k.Soyad,
-                email = k.Email,
-                departmanAd = k.DepartmanAdi,
+                ad = k.Ad ?? "",
+                soyad = k.Soyad ?? "",
+                email = k.Email ?? "",
+                departmanAd = k.DepartmanAdi ?? "",
                 kayitTarihi = k.KayitTarihi.ToString("dd.MM.yyyy HH:mm"), 
-                isActive = k.IsActive 
+                isActive = k.IsActive,
+                profileImagePath = k.ProfileImagePath 
             });
 
             return Json(new { data = jsonVeri });

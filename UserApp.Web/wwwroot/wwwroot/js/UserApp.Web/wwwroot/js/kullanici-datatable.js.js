@@ -1,16 +1,12 @@
 /**
  * Kullanıcı Yönetimi DataTables Modülü
- * Sorumluluk: Tablonun çizilmesi, AJAX istekleri ve Modal (Pop-up) yönetimini soyutlar.
  */
 const KullaniciTableModule = (function () {
-    // Özel (Private) Değişkenler
     let _dataTableInstance = null;
     let _$table = null;
 
     const _initializeTable = function (config) {
         _$table = $(config.tableSelector);
-        
-
         const ajaxEndpoint = _$table.data('url');
 
         if (!ajaxEndpoint) {
@@ -24,7 +20,7 @@ const KullaniciTableModule = (function () {
                 "type": "GET",
                 "datatype": "json",
                 "error": function (xhr, error, thrown) {
-                    console.error("AJAX Hatası: Endpoint'e ulaşılamadı. Controller adını kontrol et.", thrown);
+                    console.error("AJAX Hatası:", thrown);
                 }
             },
             "dom": "<'row mb-3'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'f>>" +
@@ -43,6 +39,7 @@ const KullaniciTableModule = (function () {
 
     const _getColumnsConfig = function () {
         return [
+            // 1. Sütun: İşlemler
             { 
                 "data": null,
                 "render": function (data, type, row) {
@@ -53,31 +50,59 @@ const KullaniciTableModule = (function () {
                             <button type="button" class="btn btn-admin-outline btn-sm btn-detay" data-row="${rowData}">Detay</button>
                             <button type="button" class="btn btn-admin-danger-soft btn-sm" 
                                     data-bs-toggle="modal" data-bs-target="#deleteModal" 
-                                    data-id="${row.id}" data-name="${row.ad} ${row.soyad}">Sil</button>
+                                    data-id="${row.id}" data-name="${row.ad || row.Ad} ${row.soyad || row.Soyad}">Sil</button>
                         </div>
                     `;
                 },
                 "orderable": false,
                 "searchable": false
             },
+            // 2. Sütun: Ad Soyad (Solunda küçük yuvarlak profil fotoğrafı / harf logosu ile birlikte)
             { 
                 "data": null,
-                "render": function(data, type, row) { return `<span class="fw-semibold">${row.ad} ${row.soyad}</span>`; }
+                "render": function(data, type, row) { 
+                    const ad = row.ad || row.Ad || "";
+                    const soyad = row.soyad || row.Soyad || "";
+                    const imgPath = row.profileImagePath || row.ProfileImagePath;
+                    const imgSrc = imgPath ? imgPath : `https://ui-avatars.com/api/?name=${ad}+${soyad}&background=random&color=fff`;
+
+                    return `
+                        <div class="d-flex align-items-center gap-2">
+                            <img src="${imgSrc}" class="rounded-circle shadow-sm" style="width: 36px; height: 36px; object-fit: cover;" alt="Profil">
+                            <span class="fw-semibold">${ad} ${soyad}</span>
+                        </div>
+                    `; 
+                }
             },
+            // 3. Sütun: Email
             { 
                 "data": "email",
-                "render": function(data) { return `<span class="text-muted">${data}</span>`; }
+                "render": function(data, type, row) { 
+                    return `<span class="text-muted">${data || row.Email || ""}</span>`; 
+                }
             },
+            // 4. Sütun: Departman
             { 
                 "data": "departmanAd",
-                "render": function(data) { return `<span class="dept-pill">${data}</span>`; }
+                "render": function(data, type, row) { 
+                    const dept = data || row.DepartmanAd || "Belirtilmemiş";
+                    return `<span class="dept-pill">${dept}</span>`; 
+                }
             },
-            { "data": "kayitTarihi" },
+            // 5. Sütun: Kayıt Tarihi
+            { 
+                "data": "kayitTarihi",
+                "render": function(data, type, row) {
+                    return data || row.KayitTarihi || "";
+                }
+            },
+            // 6. Sütun: Durum (Aktif / Pasif)
             { 
                 "data": "isActive",
                 "className": "text-end pe-4",
-                "render": function (data) {
-                    return data 
+                "render": function (data, type, row) {
+                    const status = (data !== undefined) ? data : row.IsActive;
+                    return status 
                         ? '<span class="badge bg-success bg-opacity-10 text-success border border-success">Aktif</span>' 
                         : '<span class="badge bg-danger bg-opacity-10 text-danger border border-danger">Pasif</span>';
                 }
@@ -86,21 +111,34 @@ const KullaniciTableModule = (function () {
     };
 
     const _bindEvents = function (config) {
-        // Detay Butonu Olayı 
         _$table.find('tbody').on('click', '.btn-detay', function () {
             const rowData = JSON.parse(decodeURIComponent($(this).attr('data-row')));
             
-            $('#modalAdSoyad').text(rowData.ad + " " + rowData.soyad);
-            $('#modalEmail').text(rowData.email);
-            $('#modalDepartman').text(rowData.departmanAd);
-            $('#modalKayitTarihi').text(rowData.kayitTarihi);
-            $('#modalDurum').text(rowData.isActive ? "Aktif" : "Pasif");
+            // Verileri Hazırlama
+            const imgPath = rowData.profileImagePath || rowData.ProfileImagePath;
+            const ad = rowData.ad || rowData.Ad || "";
+            const soyad = rowData.soyad || rowData.Soyad || "";
+            const fallbackSrc = imgPath ? imgPath : `https://ui-avatars.com/api/?name=${ad}+${soyad}&background=random&color=fff`;
             
+            // SOL TARAF (Fotoğraf ve Özet)
+            $('#modalProfileImage').attr('src', fallbackSrc);
+            $('#modalAdSoyadTitle').text(ad + " " + soyad);
+            $('#modalDepartmanBadge').text(rowData.departmanAd || rowData.DepartmanAd || "");
+
+            // SAĞ TARAF (Detaylı Liste)
+            $('#modalAdSoyad').text(ad + " " + soyad);
+            $('#modalEmail').text(rowData.email || rowData.Email || "");
+            $('#modalDepartman').text(rowData.departmanAd || rowData.DepartmanAd || "");
+            $('#modalKayitTarihi').text(rowData.kayitTarihi || rowData.KayitTarihi || "");
+            
+            const isActive = (rowData.isActive !== undefined) ? rowData.isActive : rowData.IsActive;
+            $('#modalDurum').text(isActive ? "Aktif" : "Pasif");
+            
+            // Modalı Göster
             const detayModal = new bootstrap.Modal(document.querySelector(config.modalSelector));
             detayModal.show();
         });
 
-        // Silme İşlemi 
         const deleteModal = document.querySelector(config.deleteModalSelector);
         if (deleteModal) {
             deleteModal.addEventListener('show.bs.modal', event => {
@@ -110,11 +148,3 @@ const KullaniciTableModule = (function () {
             });
         }
     };
-
-    return {
-        init: function (config) {
-            _initializeTable(config);
-            _bindEvents(config);
-        }
-    };
-})();

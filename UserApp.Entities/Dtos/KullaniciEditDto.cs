@@ -15,5 +15,6 @@ namespace UserApp.Entities.Dtos
         /// Kullanıcının arayüzden seçtiği fiziksel dosya (Resim).
         /// Güncelleme sırasında yeni resim seçilmezse null gelebilir.
         public IFormFile? ProfileImage { get; set; }
+        public string? ProfileImagePath { get; set; }
     }
 }

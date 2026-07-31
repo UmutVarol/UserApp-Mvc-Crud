@@ -10,5 +10,6 @@ namespace UserApp.Entities.Dtos
 
         public DateTime KayitTarihi { get; set; }
         public bool IsActive { get; set; }
+        public string? ProfileImagePath { get; set; }
     }
 }
