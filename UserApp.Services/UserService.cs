@@ -129,16 +129,16 @@ namespace UserApp.Services
             if (errors.Any())
                 return ServiceResult.Fail(errors);
 
-            var kullanici = new Kullanici
-            {
-                Id = dto.Id,
-                Ad = dto.Ad,
-                Soyad = dto.Soyad,
-                Email = dto.Email,
-                DepartmanId = dto.DepartmanId
-            };
-
-            await _repository.UpdateAsync(kullanici);
+           var kullanici = new Kullanici
+{
+    Id = dto.Id,
+    Ad = dto.Ad,
+    Soyad = dto.Soyad,
+    Email = dto.Email,
+    DepartmanId = dto.DepartmanId
+ 
+};
+await _repository.UpdateAsync(kullanici);
             return ServiceResult.Ok();
         }
 
