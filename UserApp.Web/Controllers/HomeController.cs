@@ -59,7 +59,7 @@ namespace UserApp.Web.Controllers
                 return View(dto);
             }
 
-            TempData["ToastMessage"] = $"{dto.Ad} {dto.Soyad} başarıyla eklendi.";
+            TempData["ToastMessage"] = $"{dto.Ad} {dto.Soyad} Başarıyla Eklendi.";
             TempData["ToastType"] = "success";
             return RedirectToAction(nameof(Index));
         }
@@ -87,7 +87,7 @@ namespace UserApp.Web.Controllers
                 return View(dto);
             }
 
-            TempData["ToastMessage"] = "Değişiklikler kaydedildi.";
+            TempData["ToastMessage"] = "Değişiklikler Kaydedildi.";
             TempData["ToastType"] = "success";
             return RedirectToAction(nameof(Index));
         }
@@ -104,7 +104,7 @@ namespace UserApp.Web.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await _userService.DeleteAsync(id);
-            TempData["ToastMessage"] = "Kullanıcı silindi.";
+            TempData["ToastMessage"] = "Kullanıcı Silindi.";
             TempData["ToastType"] = "danger";
             return RedirectToAction(nameof(Index));
         }
@@ -120,6 +120,29 @@ namespace UserApp.Web.Controllers
         {
             var departmanlar = await _userService.GetDepartmanlarAsync();
             ViewBag.Departmanlar = new SelectList(departmanlar, "Id", "Ad", selectedId);
+        }
+
+        /// DataTables'ın AJAX ile arka plandan veri çekmesini sağlayan Endpoint.
+        /// Sayfa yenilenmeden tüm listeyi ve durumları JSON formatında döndürür.
+  
+        [HttpGet]
+        public async Task<IActionResult> GetKullanicilarJson()
+        {
+            // DataTables'ın client-side (kendi içindeki JS) sıralamasını kullanması için listeyi çekiyoruz
+            var (items, _) = await _userService.GetPagedAsync(null, null, 1, 1000);
+
+            var jsonVeri = items.Select(k => new
+            {
+                id = k.Id,
+                ad = k.Ad,
+                soyad = k.Soyad,
+                email = k.Email,
+                departmanAd = k.DepartmanAdi,
+                kayitTarihi = k.KayitTarihi.ToString("dd.MM.yyyy HH:mm"), 
+                isActive = k.IsActive 
+            });
+
+            return Json(new { data = jsonVeri });
         }
     }
 }

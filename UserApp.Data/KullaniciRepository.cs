@@ -12,9 +12,13 @@ namespace UserApp.Data
             _context = context;
         }
 
+        /// DataTables listeleme işlemleri için kullanıcıları sayfalayarak (Pagination) getirir.
+        /// Soft Delete prensibine uygun olarak sadece silinmemiş (IsDeleted == false) aktif kullanıcıları listeler.
+        /// Gelen searchTerm'e göre Ad, Soyad, Email ve Departman kolonlarında SQL LIKE sorgusu atar.
         public async Task<(List<Kullanici> Items, int TotalCount)> GetPagedAsync(string? searchTerm, string? sortBy, int page, int pageSize)
         {
             var query = _context.Kullanicilar
+                .Where(k => !k.IsDeleted) // Silinmiş (Soft Delete) kayıtları gizle
                 .AsNoTracking()
                 .Include(k => k.Departman)
                 .AsQueryable();
@@ -49,35 +53,40 @@ namespace UserApp.Data
             return (items, totalCount);
         }
 
-        public async Task<(int, int, Kullanici?)> GetSummaryAsync()
+        /// İstatistik kartları (Toplam Kullanıcı, Departman Sayısı vs.) için verileri hesaplar.
+        /// Tüm hesaplamalar sadece IsDeleted == false (Aktif) olan kullanıcılar üzerinden yapılır.
+        public async Task<(int ToplamKullanici, int DepartmanSayisi, Kullanici? SonEklenen)> GetSummaryAsync()
         {
-            var toplam = await _context.Kullanicilar.CountAsync();
-
+            var toplam = await _context.Kullanicilar.Where(k => !k.IsDeleted).CountAsync();
+            
             var departmanSayisi = await _context.Kullanicilar
-                .Select(k => k.DepartmanId)
-                .Distinct()
-                .CountAsync();
-
+                .Where(k => !k.IsDeleted).Select(k => k.DepartmanId).Distinct().CountAsync();
+                
             var sonEklenen = await _context.Kullanicilar
-                .Include(k => k.Departman)
-                .OrderByDescending(k => k.Id)
-                .FirstOrDefaultAsync();
-
+                .Where(k => !k.IsDeleted).Include(k => k.Departman)
+                .OrderByDescending(k => k.Id).FirstOrDefaultAsync();
+                
             return (toplam, departmanSayisi, sonEklenen);
         }
 
+        /// Kullanıcıyı ID'sine göre getirir.
+        /// Silinmiş (IsDeleted = true) bir kullanıcıysa null döner.
         public async Task<Kullanici?> GetByIdAsync(int id) =>
             await _context.Kullanicilar
+                .Where(k => !k.IsDeleted) // Silinmişleri getirme
                 .Include(k => k.Departman)
                 .FirstOrDefaultAsync(k => k.Id == id);
 
+        /// Sadece aktif (silinmemiş) kullanıcıların verilerini tarayarak
+        /// bu mail adresinin kullanımda olup olmadığını kontrol eder.
         public async Task<bool> EmailExistsAsync(string email, int? excludeId = null)
         {
             var normalized = email.Trim().ToLower();
             return await _context.Kullanicilar
+                .Where(k => !k.IsDeleted) // Silinmiş kişilerin maillerini hesaba katma
                 .AnyAsync(k => k.Email != null
-                             && k.Email.ToLower() == normalized
-                             && (excludeId == null || k.Id != excludeId));
+                            && k.Email.ToLower() == normalized
+                            && (excludeId == null || k.Id != excludeId));
         }
 
         public async Task AddAsync(Kullanici kullanici)
@@ -92,9 +101,12 @@ namespace UserApp.Data
             await _context.SaveChangesAsync();
         }
 
+        /// Kullanıcıyı veritabanından fiziksel olarak silmez.
+        /// Bunun yerine IsDeleted bayrağını true yaparak Soft Delete uygular.
         public async Task DeleteAsync(Kullanici kullanici)
         {
-            _context.Kullanicilar.Remove(kullanici);
+            kullanici.IsDeleted = true; 
+            _context.Kullanicilar.Update(kullanici);
             await _context.SaveChangesAsync();
         }
     }

@@ -12,6 +12,11 @@ namespace UserApp.Entities
         public string? Email { get; set; }
         public int DepartmanId { get; set; }
         public Departman? Departman { get; set; }
+        /// <summary>
+        /// Kullanıcının sisteme ilk eklendiği (işe başlama) tarih ve saati tutar.
+        /// Nesne ilk oluşturulduğunda varsayılan olarak o anki zamanı (DateTime.Now) alır.
+        /// </summary>
+        public DateTime KayitTarihi { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Kullanıcının sistemde aktif mi yoksa pasif mi olduğunu tutar.

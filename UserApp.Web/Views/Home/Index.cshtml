@@ -1,6 +1,10 @@
 ﻿@model UserApp.Web.Models.KullaniciListViewModel
 @{ ViewData["Title"] = "Panel"; }
 
+<!-- DATATABLES BOOTSTRAP 5 VE BUTTONS CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css">
+
 <div class="breadcrumb-admin">Panel</div>
 <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
     <h1 class="page-title mb-0">Kullanıcı Yönetimi</h1>
@@ -28,101 +32,33 @@
     </div>
 </div>
 
+<!-- KULLANICI LİSTESİ TABLOSU -->
 <div class="admin-card">
     <div class="admin-card-header d-flex flex-wrap gap-2 justify-content-between align-items-center">
         <span>Kullanıcı Listesi</span>
-        <form asp-action="Index" method="get" class="d-flex flex-wrap gap-2">
-            <input type="text" name="q" value="@Model.SearchTerm" class="form-control form-control-sm" style="max-width:220px;" placeholder="Ara..." />
-            <select name="sort" class="form-select form-select-sm" style="max-width:170px;" onchange="this.form.submit()">
-                <option value="" selected="@(string.IsNullOrEmpty(Model.SortBy))">Ada göre (A-Z)</option>
-                <option value="ad_desc" selected="@(Model.SortBy == "ad_desc")">Ada göre (Z-A)</option>
-                <option value="departman" selected="@(Model.SortBy == "departman")">Departmana göre</option>
-                <option value="son_eklenen" selected="@(Model.SortBy == "son_eklenen")">Son eklenen önce</option>
-            </select>
-            <button type="submit" class="btn btn-admin-outline btn-sm">Ara</button>
-            @if (!string.IsNullOrEmpty(Model.SearchTerm))
-            {
-                <a asp-action="Index" class="btn btn-admin-outline btn-sm">Temizle</a>
-            }
-        </form>
     </div>
 
-    <div class="table-responsive d-none d-md-block">
-        <table class="table admin-table mb-0">
+    <div class="table-responsive p-3">
+        <!-- DataTables JS'in kullanacağı tabloya "data-url" ile güvenli rota verildi -->
+        <table id="kullaniciTable" class="table admin-table mb-0 w-100" data-url="@Url.Action("GetKullanicilarJson", "Home")">
             <thead>
                 <tr>
-                    <th class="ps-4">Ad Soyad</th>
+                    <th class="ps-4" style="width: 20%;">İşlemler</th> <!-- İŞLEMLER SOLA ALINDI -->
+                    <th>Ad Soyad</th>
                     <th>Email</th>
                     <th>Departman</th>
-                    <th class="text-end pe-4">İşlemler</th>
+                    <th>Kayıt Tarihi</th>
+                    <th class="text-end pe-4">Durum</th>
                 </tr>
             </thead>
             <tbody>
-                @if (!Model.Items.Any())
-                {
-                    <tr><td colspan="4" class="text-center text-muted py-5">Kayıt bulunamadı.</td></tr>
-                }
-                @foreach (var item in Model.Items)
-                {
-                    <tr>
-                        <td class="ps-4 fw-semibold">@item.Ad @item.Soyad</td>
-                        <td class="text-muted">@item.Email</td>
-                        <td><span class="dept-pill">@item.DepartmanAdi</span></td>
-                        <td class="text-end pe-4">
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-admin-outline btn-sm me-1">Düzenle</a>
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-admin-outline btn-sm me-1">Detay</a>
-                            <button type="button" class="btn btn-admin-danger-soft btn-sm"
-                                    data-bs-toggle="modal" data-bs-target="#deleteModal"
-                                    data-id="@item.Id" data-name="@item.Ad @item.Soyad">
-                                Sil
-                            </button>
-                        </td>
-                    </tr>
-                }
+                <!-- JS AJAX ile doldurulacak -->
             </tbody>
         </table>
     </div>
-
-    <div class="d-md-none p-3 d-grid gap-2">
-        @if (!Model.Items.Any())
-        {
-            <div class="text-center text-muted py-4">Kayıt bulunamadı.</div>
-        }
-        @foreach (var item in Model.Items)
-        {
-            <div class="border rounded-3 p-3" style="border-color:var(--border) !important;">
-                <div class="d-flex justify-content-between align-items-start gap-2">
-                    <div>
-                        <div class="fw-semibold">@item.Ad @item.Soyad</div>
-                        <div class="text-muted small">@item.Email</div>
-                    </div>
-                    <span class="dept-pill flex-shrink-0">@item.DepartmanAdi</span>
-                </div>
-                <div class="d-flex gap-2 mt-3">
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-admin-outline btn-sm flex-fill">Düzenle</a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-admin-outline btn-sm flex-fill">Detay</a>
-                    <button type="button" class="btn btn-admin-danger-soft btn-sm flex-fill"
-                            data-bs-toggle="modal" data-bs-target="#deleteModal"
-                            data-id="@item.Id" data-name="@item.Ad @item.Soyad">
-                        Sil
-                    </button>
-                </div>
-            </div>
-        }
-    </div>
 </div>
 
-@if (Model.TotalPages > 1)
-{
-    <nav class="d-flex justify-content-center gap-2 flex-wrap mb-4">
-        @for (int p = 1; p <= Model.TotalPages; p++)
-        {
-            <a asp-action="Index" asp-route-q="@Model.SearchTerm" asp-route-sort="@Model.SortBy" asp-route-page="@p"
-               class="btn btn-sm @(p == Model.Page ? "btn-admin-primary" : "btn-admin-outline")">@p</a>
-        }
-    </nav>
-}
-
+<!-- SİLME MODALI -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content admin-card border-0">
@@ -146,13 +82,66 @@
     </div>
 </div>
 
+<!-- BİZİM DETAY MODALIMIZ (Kurumsal Kimliğe Uyarlandı) -->
+<div class="modal fade" id="detayModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content admin-card border-0">
+            <div class="admin-card-header text-center">
+                <h5 class="mb-0">Kullanıcı Detayları</h5>
+            </div>
+            <div class="admin-card-body p-4">
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Ad Soyad:</span>
+                    <strong id="modalAdSoyad"></strong>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Email:</span>
+                    <strong id="modalEmail"></strong>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Departman:</span>
+                    <span id="modalDepartman" class="dept-pill"></span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Kayıt Tarihi:</span>
+                    <strong id="modalKayitTarihi"></strong>
+                </div>
+                <div class="d-flex justify-content-between mb-4">
+                    <span class="text-muted">Durum:</span>
+                    <strong id="modalDurum"></strong>
+                </div>
+                <div class="d-grid">
+                    <button type="button" class="btn btn-admin-outline" data-bs-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
+    <!-- JQUERY  -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    
+    <!-- DATATABLES & BUTTONS EKLENTİLERİ -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script> 
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
+
+    <!-- 2. CACHE BUSTING: asp-append-version="true" tarayıcı önbellek sorununu tamamen bitirir -->
+    <script src="~/js/kullanici-datatable.js" asp-append-version="true"></script>
+
+    <!-- 3. MODÜL İNŞASI: JS kodları içeri gömülmez, sadece ilgili konfigürasyonlarla başlatılır -->
     <script>
-        const deleteModal = document.getElementById('deleteModal');
-        deleteModal.addEventListener('show.bs.modal', event => {
-            const button = event.relatedTarget;
-            document.getElementById('deleteModalUserName').textContent = button.getAttribute('data-name');
-            document.getElementById('deleteModalForm').action = '/Home/Delete/' + button.getAttribute('data-id');
+        $(document).ready(function () {
+            KullaniciTableModule.init({
+                tableSelector: '#kullaniciTable',
+                modalSelector: '#detayModal',
+                deleteModalSelector: '#deleteModal'
+            });
         });
     </script>
 }

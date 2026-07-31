@@ -39,7 +39,9 @@ namespace UserApp.Services
                 Ad = k.Ad ?? "",
                 Soyad = k.Soyad ?? "",
                 Email = k.Email ?? "",
-                DepartmanAdi = k.Departman?.Ad ?? ""
+                DepartmanAdi = k.Departman?.Ad ?? "",
+                KayitTarihi = k.KayitTarihi,
+             IsActive = k.IsActive
             }).ToList();
 
             return (dtoItems, totalCount);
@@ -81,7 +83,9 @@ namespace UserApp.Services
                 DepartmanId = kullanici.DepartmanId
             };
         }
-
+        /// Yeni bir kullanıcı ekler. Form kurallarını denetler ve 
+        /// Email'in başka biri tarafından kullanılıp kullanılmadığını kontrol eder.
+        /// Hata varsa ServiceResult.Fail, başarılıysa ServiceResult.Ok döner.
         public async Task<ServiceResult> AddAsync(KullaniciCreateDto dto)
         {
             var validation = await _createValidator.ValidateAsync(dto);
@@ -91,7 +95,7 @@ namespace UserApp.Services
             // kullanımdaysa ayrı bir iş kuralı olarak burada yakalıyoruz.
             if (!string.IsNullOrWhiteSpace(dto.Email) && await _repository.EmailExistsAsync(dto.Email))
             {
-                errors.Add("Bu email adresi zaten kayıtlı. Aynı email ile birden fazla kullanıcı oluşturulamaz.");
+                errors.Add("Bu e-posta adresi ile daha önce kayıt olunmuş! Lütfen başka bir e-posta deneyin.");
             }
 
             if (errors.Any())
@@ -102,7 +106,8 @@ namespace UserApp.Services
                 Ad = dto.Ad,
                 Soyad = dto.Soyad,
                 Email = dto.Email,
-                DepartmanId = dto.DepartmanId
+                DepartmanId = dto.DepartmanId,
+                KayitTarihi = DateTime.Now // İşe başlama anını (Şu an) DB'ye yazar.
             };
 
             await _repository.AddAsync(kullanici);
@@ -118,7 +123,7 @@ namespace UserApp.Services
             // kaydettiğinde "email zaten kullanımda" hatası almasın diye kendi kaydı hariç tutuluyor.
             if (!string.IsNullOrWhiteSpace(dto.Email) && await _repository.EmailExistsAsync(dto.Email, dto.Id))
             {
-                errors.Add("Bu email adresi zaten başka bir kullanıcıda kayıtlı.");
+                errors.Add("Bu Email adresi zaten başka bir kullanıcıda kayıtlı.");
             }
 
             if (errors.Any())
