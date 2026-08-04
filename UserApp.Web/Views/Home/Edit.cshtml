@@ -50,6 +50,18 @@
                     <label asp-for="DepartmanId" class="form-label">Departman</label>
                     <select asp-for="DepartmanId" asp-items="ViewBag.Departmanlar" class="form-select"></select>
                 </div>
+
+                <!-- HESAP DURUMU: Aktif/Pasif Toggle Switch -->
+                <div class="col-md-6">
+                    <label class="form-label d-block">Hesap Durumu</label>
+                    <div class="form-check form-switch fs-5 mt-2">
+                        <input class="form-check-input" type="checkbox" role="switch"
+                               asp-for="IsActive" id="isActiveSwitch" />
+                        <label class="form-check-label" for="isActiveSwitch">
+                            <span id="isActiveLabel">@(Model.IsActive ? "Aktif" : "Pasif")</span>
+                        </label>
+                    </div>
+                </div>
             </div>
 
             <div class="d-flex gap-2 justify-content-end mt-4">
@@ -59,3 +71,13 @@
         </form>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        // Switch değiştikçe yanındaki metni ("Aktif"/"Pasif") anlık günceller.
+        // Sunucuya hiçbir etkisi yoktur, sadece görsel geri bildirimdir.
+        document.getElementById('isActiveSwitch').addEventListener('change', function () {
+            document.getElementById('isActiveLabel').textContent = this.checked ? 'Aktif' : 'Pasif';
+        });
+    </script>
+}

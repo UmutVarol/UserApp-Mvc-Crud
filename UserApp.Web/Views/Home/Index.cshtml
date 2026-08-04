@@ -1,5 +1,10 @@
 ﻿@model UserApp.Web.Models.KullaniciListViewModel
-@{ ViewData["Title"] = "Panel"; }
+@{
+    ViewData["Title"] = "Panel";
+    bool isAdmin = User.IsInRole("Admin");
+    bool isDepartmanYoneticisi = User.IsInRole("DepartmanYoneticisi");
+    bool canManage = isAdmin || isDepartmanYoneticisi;
+}
 
 <!-- DATATABLES BOOTSTRAP 5 VE BUTTONS CSS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
@@ -8,29 +13,35 @@
 <div class="breadcrumb-admin">Panel</div>
 <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
     <h1 class="page-title mb-0">Kullanıcı Yönetimi</h1>
-    <a asp-action="Create" class="btn btn-admin-primary">+ Yeni Kullanıcı</a>
+    @if (isAdmin)
+    {
+        <a asp-action="Create" class="btn btn-admin-primary">+ Yeni Kullanıcı</a>
+    }
 </div>
 
-<div class="row g-3 mb-4">
-    <div class="col-6 col-md-4">
-        <div class="stat-card">
-            <div class="stat-value">@Model.ToplamKullanici</div>
-            <div class="stat-label">Toplam Kullanıcı</div>
+@if (isAdmin)
+{
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-4">
+            <div class="stat-card">
+                <div class="stat-value">@Model.ToplamKullanici</div>
+                <div class="stat-label">Toplam Kullanıcı</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4">
+            <div class="stat-card">
+                <div class="stat-value">@Model.DepartmanSayisi</div>
+                <div class="stat-label">Departman Sayısı</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="stat-card">
+                <div class="stat-value" style="font-size:1.1rem;">@(Model.SonEklenenAdSoyad ?? "—")</div>
+                <div class="stat-label">Son Eklenen</div>
+            </div>
         </div>
     </div>
-    <div class="col-6 col-md-4">
-        <div class="stat-card">
-            <div class="stat-value">@Model.DepartmanSayisi</div>
-            <div class="stat-label">Departman Sayısı</div>
-        </div>
-    </div>
-    <div class="col-12 col-md-4">
-        <div class="stat-card">
-            <div class="stat-value" style="font-size:1.1rem;">@(Model.SonEklenenAdSoyad ?? "—")</div>
-            <div class="stat-label">Son Eklenen</div>
-        </div>
-    </div>
-</div>
+}
 
 <!-- KULLANICI LİSTESİ TABLOSU -->
 <div class="admin-card">
@@ -42,12 +53,15 @@
         <table id="kullaniciTable" class="table admin-table mb-0 w-100" data-url="@Url.Action("GetKullanicilarJson", "Home")">
             <thead>
                 <tr>
-                    <th class="ps-4" style="width: 20%;">İşlemler</th> 
-                    <th>Ad Soyad</th>                       
-                    <th>Email</th>                           
-                    <th>Departman</th>                       
-                    <th>Kayıt Tarihi</th>                    
-                    <th class="text-end pe-4">Durum</th>     
+                    @if (canManage)
+                    {
+                        <th class="ps-4" style="width: 22%;">İşlemler</th>
+                    }
+                    <th>Ad Soyad</th>
+                    <th>Email</th>
+                    <th>Departman</th>
+                    <th>Kayıt Tarihi</th>
+                    <th class="text-end pe-4">Durum</th>
                 </tr>
             </thead>
             <tbody>
@@ -57,73 +71,81 @@
     </div>
 </div>
 
-<!-- SİLME MODALI -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content admin-card border-0">
-            <div class="admin-card-body text-center p-4">
-                <div class="warn-icon-plain">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 3l10 18H2L12 3z"/><path d="M12 10v4"/><circle cx="12" cy="17" r=".5" fill="currentColor"/>
-                    </svg>
-                </div>
-                <h5 class="mb-2">"<span id="deleteModalUserName"></span>" silinsin mi?</h5>
-                <p class="text-muted mb-4">Bu işlem geri alınamaz.</p>
-                <form id="deleteModalForm" method="post">
-                    @Html.AntiForgeryToken()
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-admin-danger">Evet, Sil</button>
-                        <button type="button" class="btn btn-admin-outline" data-bs-dismiss="modal">Vazgeç</button>
+<!-- YENİ: Görünmez, global antiforgery token formu. DataTable satırları JS
+     tarafından dinamik oluşturulduğu için, "Aktif/Pasif Yap" butonuna
+     basıldığında dinamik bir form JS ile inşa edilir ve bu token o forma
+     kopyalanır — aksi halde [ValidateAntiForgeryToken] isteği reddeder. -->
+<form id="globalAntiForgeryForm" style="display:none;">
+    @Html.AntiForgeryToken()
+</form>
+
+@if (canManage)
+{
+    <!-- SİLME MODALI: büyütüldü (modal-lg eklendi), ikon/yazı boyutları artırıldı. -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content admin-card border-0 shadow-lg">
+                <div class="admin-card-body text-center p-5">
+                    <div class="warn-icon-plain mb-2">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <path d="M12 3l10 18H2L12 3z"/><path d="M12 10v4"/><circle cx="12" cy="17" r=".5" fill="currentColor"/>
+                        </svg>
                     </div>
-                </form>
+                    <h4 class="mb-2 fw-bold">"<span id="deleteModalUserName"></span>" silinsin mi?</h4>
+                    <p class="text-muted mb-4 fs-5">Bu işlem geri alınamaz.</p>
+                    <form id="deleteModalForm" method="post">
+                        @Html.AntiForgeryToken()
+                        <div class="d-grid gap-2 col-md-8 mx-auto">
+                            <button type="submit" class="btn btn-admin-danger btn-lg">Evet, Sil</button>
+                            <button type="button" class="btn btn-admin-outline" data-bs-dismiss="modal">Vazgeç</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
+}
 
-<!-- BÜYÜTÜLMÜŞ VE YAN YANA TASARLANMIŞ DETAY MODALIMIZ (PROFİL KARTI) -->
+<!-- DETAY MODALI: büyütüldü (modal-xl), fotoğraf 140px -> 190px, boşluklar artırıldı. -->
 <div class="modal fade" id="detayModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered"> 
+    <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content admin-card border-0 shadow-lg">
-            <div class="admin-card-header text-center py-3">
-                <h5 class="mb-0 fw-bold">Kullanıcı Profil Kartı</h5>
+            <div class="admin-card-header text-center py-4">
+                <h4 class="mb-0 fw-bold">Kullanıcı Profil Kartı</h4>
             </div>
-            <div class="admin-card-body p-4">
-                
+            <div class="admin-card-body p-5">
                 <div class="row align-items-center">
-                    <!-- SOL TARAF: BÜYÜK FOTOĞRAF VE KISA ÖZET -->
                     <div class="col-md-4 text-center border-end border-light">
-                        <img id="modalProfileImage" src="" class="rounded-circle shadow-sm border border-3 border-light mb-3" style="width: 140px; height: 140px; object-fit: cover;" alt="Profil Fotoğrafı" />
-                        <h5 id="modalAdSoyadTitle" class="fw-bold mb-1 text-dark"></h5>
-                        <span id="modalDepartmanBadge" class="dept-pill mt-2 d-inline-block"></span>
+                        <img id="modalProfileImage" src="" class="rounded-circle shadow-sm border border-3 border-light mb-3" style="width: 190px; height: 190px; object-fit: cover;" alt="Profil Fotoğrafı" />
+                        <h4 id="modalAdSoyadTitle" class="fw-bold mb-2 text-dark"></h4>
+                        <span id="modalDepartmanBadge" class="dept-pill fs-6 mt-2 d-inline-block"></span>
                     </div>
-                    
-                    <!-- SAĞ TARAF: DETAYLI BİLGİ LİSTESİ -->
-                    <div class="col-md-8 ps-md-4 mt-4 mt-md-0">
-                        <div class="d-flex justify-content-between border-bottom pb-2 mb-3">
+
+                    <div class="col-md-8 ps-md-5 mt-4 mt-md-0">
+                        <div class="d-flex justify-content-between border-bottom pb-3 mb-3 fs-5">
                             <span class="text-muted fw-semibold">Ad Soyad:</span>
                             <strong id="modalAdSoyad" class="text-dark"></strong>
                         </div>
-                        <div class="d-flex justify-content-between border-bottom pb-2 mb-3">
+                        <div class="d-flex justify-content-between border-bottom pb-3 mb-3 fs-5">
                             <span class="text-muted fw-semibold">Email:</span>
                             <strong id="modalEmail" class="text-dark"></strong>
                         </div>
-                        <div class="d-flex justify-content-between border-bottom pb-2 mb-3">
+                        <div class="d-flex justify-content-between border-bottom pb-3 mb-3 fs-5">
                             <span class="text-muted fw-semibold">Departman:</span>
                             <strong id="modalDepartman" class="text-dark"></strong>
                         </div>
-                        <div class="d-flex justify-content-between border-bottom pb-2 mb-3">
+                        <div class="d-flex justify-content-between border-bottom pb-3 mb-3 fs-5">
                             <span class="text-muted fw-semibold">Kayıt Tarihi:</span>
                             <strong id="modalKayitTarihi" class="text-dark"></strong>
                         </div>
-                        <div class="d-flex justify-content-between pb-2">
+                        <div class="d-flex justify-content-between pb-2 fs-5">
                             <span class="text-muted fw-semibold">Durum:</span>
                             <strong id="modalDurum"></strong>
                         </div>
                     </div>
                 </div>
 
-                <div class="d-grid col-md-4 mx-auto mt-4">
+                <div class="d-grid col-md-3 mx-auto mt-4">
                     <button type="button" class="btn btn-admin-outline" data-bs-dismiss="modal">Kapat</button>
                 </div>
             </div>
@@ -132,19 +154,15 @@
 </div>
 
 @section Scripts {
-    <!-- JQUERY  -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    
-    <!-- DATATABLES & BUTTONS EKLENTİLERİ -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
 
-    <!-- CACHE BUSTING -->
     <script src="~/js/kullanici-datatable.js" asp-append-version="true"></script>
 
     <script>
@@ -152,7 +170,11 @@
             KullaniciTableModule.init({
                 tableSelector: '#kullaniciTable',
                 modalSelector: '#detayModal',
-                deleteModalSelector: '#deleteModal'
+                deleteModalSelector: '#deleteModal',
+                canManage: @Json.Serialize(canManage),
+                // isAdmin ayrıca geçiliyor — Admin "Düzenle" linkini,
+                // DepartmanYoneticisi ise sadece "Aktif/Pasif Yap" butonunu görür.
+                isAdmin: @Json.Serialize(isAdmin)
             });
         });
     </script>

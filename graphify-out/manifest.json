@@ -1,0 +1,367 @@
+{
+  ".claude/settings.json": {
+    "mtime": 1785667477.2119682,
+    "ast_hash": "7d05ac7dd38c6e5bec2a0af341d10a22",
+    "semantic_hash": "7d05ac7dd38c6e5bec2a0af341d10a22"
+  },
+  ".vscode/settings.json": {
+    "mtime": 1784641716.9991653,
+    "ast_hash": "2ec2080add398a0545802b8843a8d064",
+    "semantic_hash": "2ec2080add398a0545802b8843a8d064"
+  },
+  "UserApp.Data/AppDbContext.cs": {
+    "mtime": 1785688376.7465098,
+    "ast_hash": "e52259e2f1c61afb6b51dc7b84b529ea",
+    "semantic_hash": "e52259e2f1c61afb6b51dc7b84b529ea"
+  },
+  "UserApp.Data/DepartmanRepository.cs": {
+    "mtime": 1784783884.7862566,
+    "ast_hash": "e11cce1647840a0e035fd0b13caf0bc1",
+    "semantic_hash": "e11cce1647840a0e035fd0b13caf0bc1"
+  },
+  "UserApp.Data/IDepartmanRepository.cs": {
+    "mtime": 1784783861.1736758,
+    "ast_hash": "2e0aeb78cf2abb1fee423364aa093aab",
+    "semantic_hash": "2e0aeb78cf2abb1fee423364aa093aab"
+  },
+  "UserApp.Data/IKullaniciRepository.cs": {
+    "mtime": 1785690191.2069767,
+    "ast_hash": "fffd40e05843b8935be04700f1d84440",
+    "semantic_hash": "fffd40e05843b8935be04700f1d84440"
+  },
+  "UserApp.Data/KullaniciRepository.cs": {
+    "mtime": 1785690286.4395027,
+    "ast_hash": "0e7e1b31f21e26f5f07fe3bff9603f15",
+    "semantic_hash": "0e7e1b31f21e26f5f07fe3bff9603f15"
+  },
+  "UserApp.Data/Migrations/20260720083339_InitialCreate.Designer.cs": {
+    "mtime": 1784536419.2628562,
+    "ast_hash": "dbbc7a28b2d557b2f684a81fbc25b7fe",
+    "semantic_hash": "dbbc7a28b2d557b2f684a81fbc25b7fe"
+  },
+  "UserApp.Data/Migrations/20260720083339_InitialCreate.cs": {
+    "mtime": 1784536419.2626638,
+    "ast_hash": "b914a3b6024c9d6aaa329d63df981ff0",
+    "semantic_hash": "b914a3b6024c9d6aaa329d63df981ff0"
+  },
+  "UserApp.Data/Migrations/20260720133906_AddDepartmanColumn.Designer.cs": {
+    "mtime": 1784554746.7874784,
+    "ast_hash": "adac4340e0ccb19ca16e4a9732ee8e3c",
+    "semantic_hash": "adac4340e0ccb19ca16e4a9732ee8e3c"
+  },
+  "UserApp.Data/Migrations/20260720133906_AddDepartmanColumn.cs": {
+    "mtime": 1784554746.7873025,
+    "ast_hash": "f855720ecffc670623070676b82fdd5f",
+    "semantic_hash": "f855720ecffc670623070676b82fdd5f"
+  },
+  "UserApp.Data/Migrations/20260721051846_AddValidationRules.Designer.cs": {
+    "mtime": 1784611126.729698,
+    "ast_hash": "f4981504ec0338289bee89381a2c5c95",
+    "semantic_hash": "f4981504ec0338289bee89381a2c5c95"
+  },
+  "UserApp.Data/Migrations/20260721051846_AddValidationRules.cs": {
+    "mtime": 1784611126.7294896,
+    "ast_hash": "05186f437053221d0b733e24fa967493",
+    "semantic_hash": "05186f437053221d0b733e24fa967493"
+  },
+  "UserApp.Data/Migrations/20260723051944_DepartmanTablosunuAyir.Designer.cs": {
+    "mtime": 1784783984.5016582,
+    "ast_hash": "eb8ec35c06285794d53a0679b4b975ab",
+    "semantic_hash": "eb8ec35c06285794d53a0679b4b975ab"
+  },
+  "UserApp.Data/Migrations/20260723051944_DepartmanTablosunuAyir.cs": {
+    "mtime": 1784784431.445722,
+    "ast_hash": "0e53996f727b60cf439690ff79e32d1b",
+    "semantic_hash": "0e53996f727b60cf439690ff79e32d1b"
+  },
+  "UserApp.Data/Migrations/20260724071804_DahaFazlaDepartman.Designer.cs": {
+    "mtime": 1784877484.6489851,
+    "ast_hash": "5aff0a3c54b9687dadd1fcf1fdd14f88",
+    "semantic_hash": "5aff0a3c54b9687dadd1fcf1fdd14f88"
+  },
+  "UserApp.Data/Migrations/20260724071804_DahaFazlaDepartman.cs": {
+    "mtime": 1784877484.6487248,
+    "ast_hash": "44ef29cb4c1191faadaca6a19d538947",
+    "semantic_hash": "44ef29cb4c1191faadaca6a19d538947"
+  },
+  "UserApp.Data/Migrations/20260730080927_AddUserNewFeatures.Designer.cs": {
+    "mtime": 1785398967.6259217,
+    "ast_hash": "c87c5f0caf4ec46bd9163ade7ccaf986",
+    "semantic_hash": "c87c5f0caf4ec46bd9163ade7ccaf986"
+  },
+  "UserApp.Data/Migrations/20260730080927_AddUserNewFeatures.cs": {
+    "mtime": 1785398967.6256866,
+    "ast_hash": "f102d477a0c75810e6f822dac9c14d08",
+    "semantic_hash": "f102d477a0c75810e6f822dac9c14d08"
+  },
+  "UserApp.Data/Migrations/20260730124552_AddKayitTarihi.Designer.cs": {
+    "mtime": 1785415552.9451692,
+    "ast_hash": "bf609fe50f5c3b91ce654bfb57d7debe",
+    "semantic_hash": "bf609fe50f5c3b91ce654bfb57d7debe"
+  },
+  "UserApp.Data/Migrations/20260730124552_AddKayitTarihi.cs": {
+    "mtime": 1785415552.9450018,
+    "ast_hash": "b512a5bc6a07a219f96e1f1761c978fd",
+    "semantic_hash": "b512a5bc6a07a219f96e1f1761c978fd"
+  },
+  "UserApp.Data/Migrations/20260731071054_AddProfileImagePath.Designer.cs": {
+    "mtime": 1785481854.1607387,
+    "ast_hash": "bb34174354a53e60d5aea9334c01f21b",
+    "semantic_hash": "bb34174354a53e60d5aea9334c01f21b"
+  },
+  "UserApp.Data/Migrations/20260731071054_AddProfileImagePath.cs": {
+    "mtime": 1785481854.160569,
+    "ast_hash": "ee04a1b9e5d7e11f86b208b542320579",
+    "semantic_hash": "ee04a1b9e5d7e11f86b208b542320579"
+  },
+  "UserApp.Data/Migrations/AppDbContextModelSnapshot.cs": {
+    "mtime": 1785689990.7353446,
+    "ast_hash": "19b0c34e3572c8c649f548da473b205f",
+    "semantic_hash": "19b0c34e3572c8c649f548da473b205f"
+  },
+  "UserApp.Data/UserApp.Data.csproj": {
+    "mtime": 1785688268.9647012,
+    "ast_hash": "de08800aab8e679e3530b5146365c4ab",
+    "semantic_hash": "de08800aab8e679e3530b5146365c4ab"
+  },
+  "UserApp.Data/UserApp.Web/Models/KullaniciListViewModel.cs": {
+    "mtime": 1785302982.1056473,
+    "ast_hash": "fa7539992566aa1932cfc35e888575d0",
+    "semantic_hash": "fa7539992566aa1932cfc35e888575d0"
+  },
+  "UserApp.Entities/Departman.cs": {
+    "mtime": 1784783625.744058,
+    "ast_hash": "1bcc0d0538deda95ba75276c1699830c",
+    "semantic_hash": "1bcc0d0538deda95ba75276c1699830c"
+  },
+  "UserApp.Entities/Dtos/KullaniciCreateDto.cs": {
+    "mtime": 1785401255.9822905,
+    "ast_hash": "f1563f555b2c7110173eb255ff951333",
+    "semantic_hash": "f1563f555b2c7110173eb255ff951333"
+  },
+  "UserApp.Entities/Dtos/KullaniciDetailDto.cs": {
+    "mtime": 1785496833.5971284,
+    "ast_hash": "9ae7d2842f3bb756e3ab06d3e478c3c6",
+    "semantic_hash": "9ae7d2842f3bb756e3ab06d3e478c3c6"
+  },
+  "UserApp.Entities/Dtos/KullaniciEditDto.cs": {
+    "mtime": 1785687513.8647745,
+    "ast_hash": "ad84323d53fc23476bcfbe98ca2794d5",
+    "semantic_hash": "ad84323d53fc23476bcfbe98ca2794d5"
+  },
+  "UserApp.Entities/Dtos/KullaniciListItemDto.cs": {
+    "mtime": 1785486316.4509177,
+    "ast_hash": "1214d6d192a95e844179060a1f3c580f",
+    "semantic_hash": "1214d6d192a95e844179060a1f3c580f"
+  },
+  "UserApp.Entities/Kullanici.cs": {
+    "mtime": 1785481831.5038877,
+    "ast_hash": "3c728bda0a5bc38c1d23d8d3f78156f9",
+    "semantic_hash": "3c728bda0a5bc38c1d23d8d3f78156f9"
+  },
+  "UserApp.Entities/UserApp.Entities.csproj": {
+    "mtime": 1785414168.3946135,
+    "ast_hash": "587225db05678b7217e8b35bd5ec5a83",
+    "semantic_hash": "587225db05678b7217e8b35bd5ec5a83"
+  },
+  "UserApp.Services/FileHelper.cs": {
+    "mtime": 1785481966.9926372,
+    "ast_hash": "1fc3f3ee2777233569a40baa3c783f79",
+    "semantic_hash": "1fc3f3ee2777233569a40baa3c783f79"
+  },
+  "UserApp.Services/IFileHelper.cs": {
+    "mtime": 1785413273.655687,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "UserApp.Services/ServiceResult.cs": {
+    "mtime": 1785157449.3792255,
+    "ast_hash": "96b082eead9ddab53efc691bb1f9e353",
+    "semantic_hash": "96b082eead9ddab53efc691bb1f9e353"
+  },
+  "UserApp.Services/UserApp.Services.csproj": {
+    "mtime": 1785414338.4090266,
+    "ast_hash": "d69df9251f02f2a5f0ce2c79712baaa5",
+    "semantic_hash": "d69df9251f02f2a5f0ce2c79712baaa5"
+  },
+  "UserApp.Services/UserApp.Services/IFileHelper.cs": {
+    "mtime": 1785413331.6661205,
+    "ast_hash": "dac32a4773d1c7a6a0461040a3944b2a",
+    "semantic_hash": "dac32a4773d1c7a6a0461040a3944b2a"
+  },
+  "UserApp.Services/UserService.cs": {
+    "mtime": 1785690316.5477092,
+    "ast_hash": "b7f04d66209b6e0e83d50b604cbedff2",
+    "semantic_hash": "b7f04d66209b6e0e83d50b604cbedff2"
+  },
+  "UserApp.Services/Validation/KullaniciCreateDtoValidator.cs": {
+    "mtime": 1785416269.0950127,
+    "ast_hash": "1076d60231f7a8df7f95b8b73b28bc66",
+    "semantic_hash": "1076d60231f7a8df7f95b8b73b28bc66"
+  },
+  "UserApp.Services/Validation/KullaniciEditDtoValidator.cs": {
+    "mtime": 1785397114.7689588,
+    "ast_hash": "193b73ba32b9ca2b4edf7a2cf7ac47bd",
+    "semantic_hash": "193b73ba32b9ca2b4edf7a2cf7ac47bd"
+  },
+  "UserApp.Web/Controllers/HomeController.cs": {
+    "mtime": 1785684207.721243,
+    "ast_hash": "70cde629319b0579ee982032b6958d53",
+    "semantic_hash": "70cde629319b0579ee982032b6958d53"
+  },
+  "UserApp.Web/Models/ErrorViewModel.cs": {
+    "mtime": 1784529823.6367884,
+    "ast_hash": "b978953f0161947e33b474ffda2a4077",
+    "semantic_hash": "b978953f0161947e33b474ffda2a4077"
+  },
+  "UserApp.Web/Program.cs": {
+    "mtime": 1785688460.3300483,
+    "ast_hash": "ed508f34b4e5f88f2c67220c763f5eb4",
+    "semantic_hash": "ed508f34b4e5f88f2c67220c763f5eb4"
+  },
+  "UserApp.Web/Properties/launchSettings.json": {
+    "mtime": 1784529823.6421978,
+    "ast_hash": "f835d0fa80fcf4895132e7c7c5c7e9ee",
+    "semantic_hash": "f835d0fa80fcf4895132e7c7c5c7e9ee"
+  },
+  "UserApp.Web/UserApp.Web.csproj": {
+    "mtime": 1784726234.7167203,
+    "ast_hash": "3ae3fbb226436b772bebb487b90e78d8",
+    "semantic_hash": "3ae3fbb226436b772bebb487b90e78d8"
+  },
+  "UserApp.Web/Views/Home/Create.cshtml": {
+    "mtime": 1785486681.7002747,
+    "ast_hash": "d9ddce8e465e99529ab717f290eef414",
+    "semantic_hash": "d9ddce8e465e99529ab717f290eef414"
+  },
+  "UserApp.Web/Views/Home/Delete.cshtml": {
+    "mtime": 1785137741.3076098,
+    "ast_hash": "da0df3672924538c15ac09ec668e50a0",
+    "semantic_hash": "da0df3672924538c15ac09ec668e50a0"
+  },
+  "UserApp.Web/Views/Home/Details.cshtml": {
+    "mtime": 1785137731.440237,
+    "ast_hash": "29e476424c9079585779d1393eefb1d5",
+    "semantic_hash": "29e476424c9079585779d1393eefb1d5"
+  },
+  "UserApp.Web/Views/Home/Edit.cshtml": {
+    "mtime": 1785687618.3768387,
+    "ast_hash": "d13dd118886cac1c347dd4542efd7deb",
+    "semantic_hash": "d13dd118886cac1c347dd4542efd7deb"
+  },
+  "UserApp.Web/Views/Home/Index.cshtml": {
+    "mtime": 1785497449.1386697,
+    "ast_hash": "da0440181ebb4909ea27d319e6284ead",
+    "semantic_hash": "da0440181ebb4909ea27d319e6284ead"
+  },
+  "UserApp.Web/Views/Home/Privacy.cshtml": {
+    "mtime": 1784529823.5259335,
+    "ast_hash": "6ac68e2b0d9ab26bd02a905a365a2bcc",
+    "semantic_hash": "6ac68e2b0d9ab26bd02a905a365a2bcc"
+  },
+  "UserApp.Web/Views/Shared/Error.cshtml": {
+    "mtime": 1784529823.5267296,
+    "ast_hash": "939096be653d41fb8a147fb4ff36bfb5",
+    "semantic_hash": "939096be653d41fb8a147fb4ff36bfb5"
+  },
+  "UserApp.Web/Views/Shared/_Layout.cshtml": {
+    "mtime": 1785688825.539089,
+    "ast_hash": "443abadaf5d38463d0fbb4bba52ade6d",
+    "semantic_hash": "443abadaf5d38463d0fbb4bba52ade6d"
+  },
+  "UserApp.Web/Views/Shared/_ValidationScriptsPartial.cshtml": {
+    "mtime": 1784529823.5380902,
+    "ast_hash": "e44d1ba7aa6fc476b40834e79a00fd81",
+    "semantic_hash": "e44d1ba7aa6fc476b40834e79a00fd81"
+  },
+  "UserApp.Web/Views/_ViewImports.cshtml": {
+    "mtime": 1784529823.643213,
+    "ast_hash": "be513bbd3233f705b50f2dc2f50be82a",
+    "semantic_hash": "be513bbd3233f705b50f2dc2f50be82a"
+  },
+  "UserApp.Web/Views/_ViewStart.cshtml": {
+    "mtime": 1784529823.644419,
+    "ast_hash": "e4cd881cf745e1e88cf2c5f6eceae943",
+    "semantic_hash": "e4cd881cf745e1e88cf2c5f6eceae943"
+  },
+  "UserApp.Web/appsettings.Development.json": {
+    "mtime": 1784529823.5907307,
+    "ast_hash": "804b473502a4c415cf75db61c56c32aa",
+    "semantic_hash": "804b473502a4c415cf75db61c56c32aa"
+  },
+  "UserApp.Web/appsettings.json": {
+    "mtime": 1785688581.2977567,
+    "ast_hash": "702158545061cb7474ef364d0e3f439b",
+    "semantic_hash": "702158545061cb7474ef364d0e3f439b"
+  },
+  "UserApp.Web/wwwroot/js/kullanici-datatable.js": {
+    "mtime": 1785686243.5685833,
+    "ast_hash": "d0714a0e3cf44efd8a4ea97acc2e0f17",
+    "semantic_hash": "d0714a0e3cf44efd8a4ea97acc2e0f17"
+  },
+  "UserApp.Web/wwwroot/js/site.js": {
+    "mtime": 1784529823.5400958,
+    "ast_hash": "53e309eeca51b3b6de20c4d24e1b2b63",
+    "semantic_hash": "53e309eeca51b3b6de20c4d24e1b2b63"
+  },
+  "UserApp.slnx": {
+    "mtime": 1784529836.4573445,
+    "ast_hash": "d4396146dc990964198d563f6ea2bd6e",
+    "semantic_hash": "d4396146dc990964198d563f6ea2bd6e"
+  },
+  "UserApp.Data/Migrations/20260802163633_AddIdentityTables.Designer.cs": {
+    "mtime": 1785688593.2585604,
+    "ast_hash": "b1f11c21c088554de8c204799fade7c1",
+    "semantic_hash": "b1f11c21c088554de8c204799fade7c1"
+  },
+  "UserApp.Data/Migrations/20260802163633_AddIdentityTables.cs": {
+    "mtime": 1785688593.2583714,
+    "ast_hash": "de34d02dc3ff3751dc6944b4702ba6eb",
+    "semantic_hash": "de34d02dc3ff3751dc6944b4702ba6eb"
+  },
+  "UserApp.Data/Migrations/20260802165950_AddUserRoleLinkingFields.Designer.cs": {
+    "mtime": 1785689990.7348871,
+    "ast_hash": "5a92452205ccecf42a861e10d529167f",
+    "semantic_hash": "5a92452205ccecf42a861e10d529167f"
+  },
+  "UserApp.Data/Migrations/20260802165950_AddUserRoleLinkingFields.cs": {
+    "mtime": 1785689990.7346938,
+    "ast_hash": "79f5a6a45a8c05097f00e6101c083ac7",
+    "semantic_hash": "79f5a6a45a8c05097f00e6101c083ac7"
+  },
+  "UserApp.Data/UserApp.Data/Seed/IdentitySeeder.cs": {
+    "mtime": 1785689972.1780655,
+    "ast_hash": "4c2aeab3c10bbc0072e636eff0d65c3f",
+    "semantic_hash": "4c2aeab3c10bbc0072e636eff0d65c3f"
+  },
+  "UserApp.Entities/ApplicationUser.cs": {
+    "mtime": 1785689941.1625745,
+    "ast_hash": "a627a2606f82f6f92a716d8ba7fb4c1e",
+    "semantic_hash": "a627a2606f82f6f92a716d8ba7fb4c1e"
+  },
+  "UserApp.Services/IUserService.cs": {
+    "mtime": 1785690303.9463346,
+    "ast_hash": "e489941e99e099160ee7baf0bb056d2d",
+    "semantic_hash": "e489941e99e099160ee7baf0bb056d2d"
+  },
+  "UserApp.Web/Controllers/AccountController.cs": {
+    "mtime": 1785688776.2545335,
+    "ast_hash": "a4751425a973a08d807d76802e42e43a",
+    "semantic_hash": "a4751425a973a08d807d76802e42e43a"
+  },
+  "UserApp.Web/Models/UserApp.Web/Models/LoginViewModel.cs": {
+    "mtime": 1785688729.5760272,
+    "ast_hash": "ea5eabfd0a839d28873792ed676b712d",
+    "semantic_hash": "ea5eabfd0a839d28873792ed676b712d"
+  },
+  "UserApp.Web/Views/Account/AccessDenied.cshtml": {
+    "mtime": 1785688810.4068766,
+    "ast_hash": "b8cb15eb9a921bb87d44b41d97bbbb52",
+    "semantic_hash": "b8cb15eb9a921bb87d44b41d97bbbb52"
+  },
+  "UserApp.Web/Views/Account/Login.cshtml": {
+    "mtime": 1785688795.1338985,
+    "ast_hash": "b0913dd558f22aa0d09e2e5ff7588d39",
+    "semantic_hash": "b0913dd558f22aa0d09e2e5ff7588d39"
+  }
+}

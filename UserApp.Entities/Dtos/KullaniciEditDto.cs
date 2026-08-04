@@ -12,8 +12,12 @@ namespace UserApp.Entities.Dtos
         public string? Email { get; set; }
         public int DepartmanId { get; set; }
 
+        /// Yöneticinin Edit ekranındaki toggle switch üzerinden değiştirdiği
+        /// aktif/pasif durumu. Formdan checkbox olarak geldiği için model
+        /// binding sırasında işaretli değilse "false" olarak bağlanır.
+        public bool IsActive { get; set; }
+
         /// Kullanıcının arayüzden seçtiği fiziksel dosya (Resim).
-        /// Güncelleme sırasında yeni resim seçilmezse null gelebilir.
         public IFormFile? ProfileImage { get; set; }
         public string? ProfileImagePath { get; set; }
     }

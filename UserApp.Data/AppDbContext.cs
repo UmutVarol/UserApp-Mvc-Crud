@@ -1,9 +1,17 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using UserApp.Entities;
 
 namespace UserApp.Data
 {
-    public class AppDbContext : DbContext
+    /// <summary>
+    /// DİKKAT: DbContext artık IdentityDbContext&lt;ApplicationUser&gt;'dan türüyor.
+    /// Bu, EF Core'un Identity'nin ihtiyaç duyduğu AspNetUsers, AspNetRoles,
+    /// AspNetUserRoles vb. tabloları modele otomatik dahil etmesini sağlar.
+    /// Mevcut Kullanicilar/Departmanlar tablolarınız ve ilişkileri AYNEN
+    /// korunuyor — sadece base class ve OnModelCreating içinde base çağrısı eklendi.
+    /// </summary>
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -12,6 +20,11 @@ namespace UserApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // KRİTİK: base.OnModelCreating MUTLAKA önce çağrılmalı, aksi halde
+            // Identity tabloları migration'da hiç oluşmaz ve login sistemi
+            // çalışma zamanında "geçersiz nesne adı 'AspNetUsers'" hatası verir.
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Kullanici>(entity =>
             {
                 entity.Property(k => k.Ad).IsRequired().HasMaxLength(50);

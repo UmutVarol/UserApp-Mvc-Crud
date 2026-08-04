@@ -1,0 +1,61 @@
+@model UserApp.Web.Models.AccountFormViewModel
+@{ ViewData["Title"] = "Yeni Hesap"; }
+
+<div class="breadcrumb-admin"><a asp-action="Index">Hesap Yönetimi</a> / Yeni Hesap</div>
+<h1 class="page-title">Yeni Hesap Oluştur</h1>
+
+<div class="admin-card">
+    <div class="admin-card-body">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <input asp-for="Email" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Password" class="form-label">Şifre</label>
+                    <input asp-for="Password" type="password" class="form-control" />
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="SecilenRol" class="form-label">Rol</label>
+                    <select asp-for="SecilenRol" asp-items="Model.RolSecenekleri" class="form-select" id="rolSelect">
+                        <option value="">Seçiniz...</option>
+                    </select>
+                </div>
+                <div class="col-md-4" id="departmanAlani">
+                    <label asp-for="YonetilenDepartmanId" class="form-label">Yönettiği Departman</label>
+                    <select asp-for="YonetilenDepartmanId" asp-items="Model.DepartmanSecenekleri" class="form-select">
+                        <option value="">Seçiniz...</option>
+                    </select>
+                </div>
+                <div class="col-md-4" id="personelAlani">
+                    <label asp-for="KullaniciId" class="form-label">Bağlı Personel Kaydı</label>
+                    <select asp-for="KullaniciId" asp-items="Model.KullaniciSecenekleri" class="form-select">
+                        <option value="">Seçiniz...</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="d-flex gap-2 justify-content-end mt-4">
+                <a asp-action="Index" class="btn btn-admin-outline">Vazgeç</a>
+                <button type="submit" class="btn btn-admin-primary">Hesabı Oluştur</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Rol seçimine göre alakasız alanı gizler — sadece görsel kolaylık,
+        // gerçek kural (hangi alan zorunlu) zaten backend'de kontrol ediliyor.
+        function toggleRoleFields() {
+            const rol = document.getElementById('rolSelect').value;
+            document.getElementById('departmanAlani').style.display = rol === 'DepartmanYoneticisi' ? '' : 'none';
+            document.getElementById('personelAlani').style.display = rol === 'User' ? '' : 'none';
+        }
+        document.getElementById('rolSelect').addEventListener('change', toggleRoleFields);
+        document.addEventListener('DOMContentLoaded', toggleRoleFields);
+    </script>
+}

@@ -14,7 +14,11 @@
 <body>
 @{
     var currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
     bool IsActive(params string[] actions) => actions.Contains(currentAction);
+    bool isLoggedIn = User.Identity?.IsAuthenticated ?? false;
+    bool isAdmin = User.IsInRole("Admin");
+    bool hasKullaniciProfile = User.HasClaim(c => c.Type == "KullaniciId");
 }
 <div class="app-shell">
     <aside class="app-sidebar d-none d-lg-flex flex-column">
@@ -26,16 +30,47 @@
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
                 Panel
             </a>
-            <a class="side-link @(IsActive("Create") ? "active" : "")" asp-controller="Home" asp-action="Create">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
-                Yeni Kullanıcı
-            </a>
+            @if (isAdmin)
+            {
+                <a class="side-link @(IsActive("Create") ? "active" : "")" asp-controller="Home" asp-action="Create">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+                    Yeni Kullanıcı
+                </a>
+                <a class="side-link @(currentController == "AccountManagement" ? "active" : "")" asp-controller="AccountManagement" asp-action="Index">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Hesap Yönetimi
+                </a>
+            }
+            @if (hasKullaniciProfile)
+            {
+                <a class="side-link @(currentController == "Profile" ? "active" : "")" asp-controller="Profile" asp-action="Edit">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg>
+                    Profilim
+                </a>
+            }
             <div class="side-section-label">Ayarlar</div>
             <a class="side-link @(IsActive("Privacy") ? "active" : "")" asp-controller="Home" asp-action="Privacy">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 Gizlilik
             </a>
         </nav>
+
+        <div class="app-sidebar-account px-3 py-2 border-top">
+            @if (isLoggedIn)
+            {
+                <div class="small text-muted mb-1 text-truncate" title="@User.Identity!.Name">
+                    👤 @User.Identity!.Name
+                </div>
+                <form asp-controller="Account" asp-action="Logout" method="post" class="d-grid">
+                    <button type="submit" class="btn btn-admin-outline btn-sm">Çıkış Yap</button>
+                </form>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Login" class="btn btn-admin-primary btn-sm w-100">Giriş Yap</a>
+            }
+        </div>
+
         <div class="app-sidebar-footer">
             <button type="button" id="themeToggle" class="side-theme-toggle">
                 <span id="themeIcon">🌙</span> <span>Tema</span>
@@ -66,10 +101,34 @@
     <div class="offcanvas-body p-0">
         <nav class="app-sidebar-nav">
             <a class="side-link @(IsActive("Index") ? "active" : "")" asp-controller="Home" asp-action="Index">Panel</a>
-            <a class="side-link @(IsActive("Create") ? "active" : "")" asp-controller="Home" asp-action="Create">Yeni Kullanıcı</a>
+            @if (isAdmin)
+            {
+                <a class="side-link @(IsActive("Create") ? "active" : "")" asp-controller="Home" asp-action="Create">Yeni Kullanıcı</a>
+                <a class="side-link @(currentController == "AccountManagement" ? "active" : "")" asp-controller="AccountManagement" asp-action="Index">Hesap Yönetimi</a>
+            }
+            @if (hasKullaniciProfile)
+            {
+                <a class="side-link @(currentController == "Profile" ? "active" : "")" asp-controller="Profile" asp-action="Edit">Profilim</a>
+            }
             <div class="side-section-label">Ayarlar</div>
             <a class="side-link @(IsActive("Privacy") ? "active" : "")" asp-controller="Home" asp-action="Privacy">Gizlilik</a>
         </nav>
+
+        <div class="app-sidebar-account px-3 py-2 border-top mt-2">
+            @if (isLoggedIn)
+            {
+                <div class="small text-muted mb-1 text-truncate" title="@User.Identity!.Name">
+                    👤 @User.Identity!.Name
+                </div>
+                <form asp-controller="Account" asp-action="Logout" method="post" class="d-grid">
+                    <button type="submit" class="btn btn-admin-outline btn-sm">Çıkış Yap</button>
+                </form>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Login" class="btn btn-admin-primary btn-sm w-100">Giriş Yap</a>
+            }
+        </div>
     </div>
 </div>
 

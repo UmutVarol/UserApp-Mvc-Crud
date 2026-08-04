@@ -1,0 +1,642 @@
+{
+  "communities": {
+    "0": [
+      "actionname",
+      "iformfile",
+      "int",
+      "iwebhostenvironment",
+      "userapp_entities_dtos_kullanicieditdto_userapp_entities_dtos_kullanicieditdto",
+      "userapp_services_iuserservice_cs_departman",
+      "userapp_services_iuserservice_cs_departmansayisi",
+      "userapp_services_iuserservice_cs_items",
+      "userapp_services_iuserservice_cs_kullanicicreatedto",
+      "userapp_services_iuserservice_cs_kullanicidetaildto",
+      "userapp_services_iuserservice_cs_kullanicilistitemdto",
+      "userapp_services_iuserservice_cs_list",
+      "userapp_services_iuserservice_cs_serviceresult",
+      "userapp_services_iuserservice_cs_soneklenenadsoyad",
+      "userapp_services_iuserservice_cs_task",
+      "userapp_services_iuserservice_cs_toplamkullanici",
+      "userapp_services_iuserservice_cs_totalcount",
+      "userapp_services_iuserservice_userapp_services_iuserservice",
+      "userapp_services_iuserservice_userapp_services_iuserservice_addasync",
+      "userapp_services_iuserservice_userapp_services_iuserservice_deleteasync",
+      "userapp_services_iuserservice_userapp_services_iuserservice_getdepartmanidasync",
+      "userapp_services_iuserservice_userapp_services_iuserservice_getdepartmanlarasync",
+      "userapp_services_iuserservice_userapp_services_iuserservice_getdetailasync",
+      "userapp_services_iuserservice_userapp_services_iuserservice_getforeditasync",
+      "userapp_services_iuserservice_userapp_services_iuserservice_getpagedasync",
+      "userapp_services_iuserservice_userapp_services_iuserservice_getsummaryasync",
+      "userapp_services_iuserservice_userapp_services_iuserservice_updateasync",
+      "userapp_web_controllers_homecontroller_cs_httpget",
+      "userapp_web_controllers_homecontroller_cs_httppost",
+      "userapp_web_controllers_homecontroller_cs_iactionresult",
+      "userapp_web_controllers_homecontroller_cs_kullanicicreatedto",
+      "userapp_web_controllers_homecontroller_cs_task",
+      "userapp_web_controllers_homecontroller_cs_validateantiforgerytoken",
+      "userapp_web_controllers_homecontroller_userapp_web_controllers_homecontroller",
+      "userapp_web_controllers_homecontroller_userapp_web_controllers_homecontroller_create",
+      "userapp_web_controllers_homecontroller_userapp_web_controllers_homecontroller_delete",
+      "userapp_web_controllers_homecontroller_userapp_web_controllers_homecontroller_deleteconfirmed",
+      "userapp_web_controllers_homecontroller_userapp_web_controllers_homecontroller_details",
+      "userapp_web_controllers_homecontroller_userapp_web_controllers_homecontroller_edit",
+      "userapp_web_controllers_homecontroller_userapp_web_controllers_homecontroller_getdetailjson",
+      "userapp_web_controllers_homecontroller_userapp_web_controllers_homecontroller_getkullanicilarjson",
+      "userapp_web_controllers_homecontroller_userapp_web_controllers_homecontroller_index",
+      "userapp_web_controllers_homecontroller_userapp_web_controllers_homecontroller_populatedepartmanlarasync"
+    ],
+    "1": [
+      "csharp_namespace:2110e69cc270f44f",
+      "csharp_namespace:74668ced5594152c",
+      "csharp_namespace:a10ce6067f36bbc0",
+      "csharp_namespace:c8fdb2c014c1ea78",
+      "dbset",
+      "iconfiguration",
+      "identitydbcontext",
+      "identityuser",
+      "iserviceprovider",
+      "userapp_data_appdbcontext",
+      "userapp_data_appdbcontext_cs_departman",
+      "userapp_data_appdbcontext_cs_kullanici",
+      "userapp_data_appdbcontext_cs_modelbuilder",
+      "userapp_data_appdbcontext_userapp_data_appdbcontext",
+      "userapp_data_appdbcontext_userapp_data_appdbcontext_onmodelcreating",
+      "userapp_data_departmanrepository",
+      "userapp_data_departmanrepository_cs_list",
+      "userapp_data_departmanrepository_cs_task",
+      "userapp_data_departmanrepository_userapp_data_departmanrepository",
+      "userapp_data_departmanrepository_userapp_data_departmanrepository_getallasync",
+      "userapp_data_idepartmanrepository",
+      "userapp_data_idepartmanrepository_cs_list",
+      "userapp_data_idepartmanrepository_cs_task",
+      "userapp_data_idepartmanrepository_userapp_data_idepartmanrepository",
+      "userapp_data_idepartmanrepository_userapp_data_idepartmanrepository_getallasync",
+      "userapp_data_ikullanicirepository",
+      "userapp_data_kullanicirepository",
+      "userapp_data_userapp_data_seed_identityseeder",
+      "userapp_data_userapp_data_seed_identityseeder_cs_task",
+      "userapp_data_userapp_data_seed_identityseeder_userapp_data_seed_identityseeder",
+      "userapp_data_userapp_data_seed_identityseeder_userapp_data_seed_identityseeder_seedasync",
+      "userapp_entities_applicationuser",
+      "userapp_entities_applicationuser_userapp_entities_applicationuser",
+      "userapp_entities_departman",
+      "userapp_entities_departman_userapp_entities_departman",
+      "userapp_entities_kullanici",
+      "userapp_entities_kullanici_cs_datetime",
+      "userapp_entities_kullanici_userapp_entities_kullanici",
+      "userapp_services_iuserservice",
+      "userapp_services_userservice",
+      "userapp_web_program"
+    ],
+    "2": [
+      "idepartmanrepository",
+      "ivalidator",
+      "userapp_data_ikullanicirepository_cs_departmansayisi",
+      "userapp_data_ikullanicirepository_cs_items",
+      "userapp_data_ikullanicirepository_cs_kullanici",
+      "userapp_data_ikullanicirepository_cs_list",
+      "userapp_data_ikullanicirepository_cs_soneklenen",
+      "userapp_data_ikullanicirepository_cs_task",
+      "userapp_data_ikullanicirepository_cs_toplamkullanici",
+      "userapp_data_ikullanicirepository_cs_totalcount",
+      "userapp_data_ikullanicirepository_userapp_data_ikullanicirepository",
+      "userapp_data_ikullanicirepository_userapp_data_ikullanicirepository_addasync",
+      "userapp_data_ikullanicirepository_userapp_data_ikullanicirepository_deleteasync",
+      "userapp_data_ikullanicirepository_userapp_data_ikullanicirepository_emailexistsasync",
+      "userapp_data_ikullanicirepository_userapp_data_ikullanicirepository_getbyidasync",
+      "userapp_data_ikullanicirepository_userapp_data_ikullanicirepository_getdepartmanidasync",
+      "userapp_data_ikullanicirepository_userapp_data_ikullanicirepository_getpagedasync",
+      "userapp_data_ikullanicirepository_userapp_data_ikullanicirepository_getsummaryasync",
+      "userapp_data_ikullanicirepository_userapp_data_ikullanicirepository_updateasync",
+      "userapp_services_userservice_cs_departman",
+      "userapp_services_userservice_cs_departmansayisi",
+      "userapp_services_userservice_cs_items",
+      "userapp_services_userservice_cs_kullanicicreatedto",
+      "userapp_services_userservice_cs_kullanicidetaildto",
+      "userapp_services_userservice_cs_kullanicilistitemdto",
+      "userapp_services_userservice_cs_list",
+      "userapp_services_userservice_cs_serviceresult",
+      "userapp_services_userservice_cs_soneklenenadsoyad",
+      "userapp_services_userservice_cs_task",
+      "userapp_services_userservice_cs_toplamkullanici",
+      "userapp_services_userservice_cs_totalcount",
+      "userapp_services_userservice_userapp_services_userservice",
+      "userapp_services_userservice_userapp_services_userservice_addasync",
+      "userapp_services_userservice_userapp_services_userservice_deleteasync",
+      "userapp_services_userservice_userapp_services_userservice_getdepartmanidasync",
+      "userapp_services_userservice_userapp_services_userservice_getdepartmanlarasync",
+      "userapp_services_userservice_userapp_services_userservice_getdetailasync",
+      "userapp_services_userservice_userapp_services_userservice_getforeditasync",
+      "userapp_services_userservice_userapp_services_userservice_getpagedasync",
+      "userapp_services_userservice_userapp_services_userservice_getsummaryasync",
+      "userapp_services_userservice_userapp_services_userservice_updateasync"
+    ],
+    "3": [
+      "abstractvalidator",
+      "csharp_namespace:1eb40bf1b78170fb",
+      "csharp_namespace:67740dae55415b82",
+      "userapp_data_userapp_web_models_kullanicilistviewmodel",
+      "userapp_data_userapp_web_models_kullanicilistviewmodel_cs_list",
+      "userapp_data_userapp_web_models_kullanicilistviewmodel_userapp_web_models_kullanicilistviewmodel",
+      "userapp_entities_dtos_kullanicicreatedto_cs_iformfile",
+      "userapp_entities_dtos_kullanicicreatedto_cs_userapp_entities_dtos_kullanicicreatedto",
+      "userapp_entities_dtos_kullanicicreatedto_userapp_entities_dtos_kullanicicreatedto",
+      "userapp_entities_dtos_kullanicidetaildto_cs_datetime",
+      "userapp_entities_dtos_kullanicidetaildto_cs_userapp_entities_dtos_kullanicidetaildto",
+      "userapp_entities_dtos_kullanicidetaildto_userapp_entities_dtos_kullanicidetaildto",
+      "userapp_entities_dtos_kullanicieditdto_cs_userapp_entities_dtos_kullanicieditdto",
+      "userapp_entities_dtos_kullanicilistitemdto",
+      "userapp_entities_dtos_kullanicilistitemdto_cs_datetime",
+      "userapp_entities_dtos_kullanicilistitemdto_userapp_entities_dtos_kullanicilistitemdto",
+      "userapp_services_validation_kullanicicreatedtovalidator",
+      "userapp_services_validation_kullanicicreatedtovalidator_userapp_services_validation_kullanicicreatedtovalidator",
+      "userapp_services_validation_kullanicieditdtovalidator",
+      "userapp_services_validation_kullanicieditdtovalidator_cs_string",
+      "userapp_services_validation_kullanicieditdtovalidator_userapp_services_validation_kullanicieditdtovalidator"
+    ],
+    "4": [
+      "controller",
+      "csharp_namespace:2cf9a445f5f38faa",
+      "csharp_namespace:2e6d94c5c10ea6c5",
+      "signinmanager",
+      "userapp_web_controllers_accountcontroller",
+      "userapp_web_controllers_accountcontroller_cs_httpget",
+      "userapp_web_controllers_accountcontroller_cs_httppost",
+      "userapp_web_controllers_accountcontroller_cs_iactionresult",
+      "userapp_web_controllers_accountcontroller_cs_task",
+      "userapp_web_controllers_accountcontroller_cs_validateantiforgerytoken",
+      "userapp_web_controllers_accountcontroller_userapp_web_controllers_accountcontroller",
+      "userapp_web_controllers_accountcontroller_userapp_web_controllers_accountcontroller_accessdenied",
+      "userapp_web_controllers_accountcontroller_userapp_web_controllers_accountcontroller_login",
+      "userapp_web_controllers_accountcontroller_userapp_web_controllers_accountcontroller_logout",
+      "userapp_web_controllers_homecontroller",
+      "userapp_web_models_errorviewmodel",
+      "userapp_web_models_errorviewmodel_userapp_web_models_errorviewmodel",
+      "userapp_web_models_userapp_web_models_loginviewmodel",
+      "userapp_web_models_userapp_web_models_loginviewmodel_userapp_web_models_loginviewmodel",
+      "usermanager"
+    ],
+    "5": [
+      "userapp_data_kullanicirepository_cs_departmansayisi",
+      "userapp_data_kullanicirepository_cs_items",
+      "userapp_data_kullanicirepository_cs_kullanici",
+      "userapp_data_kullanicirepository_cs_list",
+      "userapp_data_kullanicirepository_cs_soneklenen",
+      "userapp_data_kullanicirepository_cs_task",
+      "userapp_data_kullanicirepository_cs_toplamkullanici",
+      "userapp_data_kullanicirepository_cs_totalcount",
+      "userapp_data_kullanicirepository_userapp_data_kullanicirepository",
+      "userapp_data_kullanicirepository_userapp_data_kullanicirepository_addasync",
+      "userapp_data_kullanicirepository_userapp_data_kullanicirepository_deleteasync",
+      "userapp_data_kullanicirepository_userapp_data_kullanicirepository_emailexistsasync",
+      "userapp_data_kullanicirepository_userapp_data_kullanicirepository_getbyidasync",
+      "userapp_data_kullanicirepository_userapp_data_kullanicirepository_getdepartmanidasync",
+      "userapp_data_kullanicirepository_userapp_data_kullanicirepository_getpagedasync",
+      "userapp_data_kullanicirepository_userapp_data_kullanicirepository_getsummaryasync",
+      "userapp_data_kullanicirepository_userapp_data_kullanicirepository_updateasync"
+    ],
+    "6": [
+      "userapp_web_properties_launchsettings",
+      "userapp_web_properties_launchsettings_environmentvariables_aspnetcore_environment",
+      "userapp_web_properties_launchsettings_http_applicationurl",
+      "userapp_web_properties_launchsettings_http_commandname",
+      "userapp_web_properties_launchsettings_http_dotnetrunmessages",
+      "userapp_web_properties_launchsettings_http_environmentvariables",
+      "userapp_web_properties_launchsettings_http_launchbrowser",
+      "userapp_web_properties_launchsettings_https_applicationurl",
+      "userapp_web_properties_launchsettings_https_commandname",
+      "userapp_web_properties_launchsettings_https_dotnetrunmessages",
+      "userapp_web_properties_launchsettings_https_environmentvariables",
+      "userapp_web_properties_launchsettings_https_launchbrowser",
+      "userapp_web_properties_launchsettings_profiles",
+      "userapp_web_properties_launchsettings_profiles_http",
+      "userapp_web_properties_launchsettings_profiles_https",
+      "userapp_web_properties_launchsettings_schema"
+    ],
+    "7": [
+      "framework_net10_0",
+      "nuget_fluentvalidation",
+      "nuget_microsoft_aspnetcore_identity_entityframeworkcore",
+      "nuget_microsoft_entityframeworkcore_design",
+      "nuget_microsoft_entityframeworkcore_sqlserver",
+      "nuget_microsoft_entityframeworkcore_tools",
+      "sdk_microsoft_net_sdk",
+      "sdk_microsoft_net_sdk_web",
+      "userapp",
+      "userapp_data_userapp_data",
+      "userapp_entities_userapp_entities",
+      "userapp_services_userapp_services",
+      "userapp_web_userapp_web",
+      "userapp_web_userapp_web_csproj_nuget_microsoft_entityframeworkcore_design"
+    ],
+    "8": [
+      "errormessage",
+      "filepath",
+      "success",
+      "userapp_services_filehelper",
+      "userapp_services_filehelper_cs_iformfile",
+      "userapp_services_filehelper_cs_int",
+      "userapp_services_filehelper_cs_string",
+      "userapp_services_filehelper_cs_task",
+      "userapp_services_filehelper_userapp_services_filehelper",
+      "userapp_services_filehelper_userapp_services_filehelper_uploadprofileimageasync"
+    ],
+    "9": [
+      "csharp_namespace:29e206a5e3ea29ec",
+      "userapp_data_migrations_20260802165950_adduserrolelinkingfields",
+      "userapp_data_migrations_20260802165950_adduserrolelinkingfields_cs_migrationbuilder",
+      "userapp_data_migrations_20260802165950_adduserrolelinkingfields_designer",
+      "userapp_data_migrations_20260802165950_adduserrolelinkingfields_designer_cs_modelbuilder",
+      "userapp_data_migrations_20260802165950_adduserrolelinkingfields_designer_userapp_data_migrations_adduserrolelinkingfields",
+      "userapp_data_migrations_20260802165950_adduserrolelinkingfields_designer_userapp_data_migrations_adduserrolelinkingfields_buildtargetmodel",
+      "userapp_data_migrations_20260802165950_adduserrolelinkingfields_userapp_data_migrations_adduserrolelinkingfields_down",
+      "userapp_data_migrations_20260802165950_adduserrolelinkingfields_userapp_data_migrations_adduserrolelinkingfields_up"
+    ],
+    "10": [
+      "userapp_data_migrations_20260721051846_addvalidationrules",
+      "userapp_data_migrations_20260721051846_addvalidationrules_cs_migrationbuilder",
+      "userapp_data_migrations_20260721051846_addvalidationrules_designer",
+      "userapp_data_migrations_20260721051846_addvalidationrules_designer_cs_modelbuilder",
+      "userapp_data_migrations_20260721051846_addvalidationrules_designer_userapp_data_migrations_addvalidationrules",
+      "userapp_data_migrations_20260721051846_addvalidationrules_designer_userapp_data_migrations_addvalidationrules_buildtargetmodel",
+      "userapp_data_migrations_20260721051846_addvalidationrules_userapp_data_migrations_addvalidationrules_down",
+      "userapp_data_migrations_20260721051846_addvalidationrules_userapp_data_migrations_addvalidationrules_up"
+    ],
+    "11": [
+      "userapp_data_migrations_20260720083339_initialcreate",
+      "userapp_data_migrations_20260720083339_initialcreate_cs_migrationbuilder",
+      "userapp_data_migrations_20260720083339_initialcreate_designer",
+      "userapp_data_migrations_20260720083339_initialcreate_designer_cs_modelbuilder",
+      "userapp_data_migrations_20260720083339_initialcreate_designer_userapp_data_migrations_initialcreate",
+      "userapp_data_migrations_20260720083339_initialcreate_designer_userapp_data_migrations_initialcreate_buildtargetmodel",
+      "userapp_data_migrations_20260720083339_initialcreate_userapp_data_migrations_initialcreate_down",
+      "userapp_data_migrations_20260720083339_initialcreate_userapp_data_migrations_initialcreate_up"
+    ],
+    "12": [
+      "userapp_data_migrations_20260720133906_adddepartmancolumn",
+      "userapp_data_migrations_20260720133906_adddepartmancolumn_cs_migrationbuilder",
+      "userapp_data_migrations_20260720133906_adddepartmancolumn_designer",
+      "userapp_data_migrations_20260720133906_adddepartmancolumn_designer_cs_modelbuilder",
+      "userapp_data_migrations_20260720133906_adddepartmancolumn_designer_userapp_data_migrations_adddepartmancolumn",
+      "userapp_data_migrations_20260720133906_adddepartmancolumn_designer_userapp_data_migrations_adddepartmancolumn_buildtargetmodel",
+      "userapp_data_migrations_20260720133906_adddepartmancolumn_userapp_data_migrations_adddepartmancolumn_down",
+      "userapp_data_migrations_20260720133906_adddepartmancolumn_userapp_data_migrations_adddepartmancolumn_up"
+    ],
+    "13": [
+      "userapp_data_migrations_20260723051944_departmantablosunuayir",
+      "userapp_data_migrations_20260723051944_departmantablosunuayir_cs_migrationbuilder",
+      "userapp_data_migrations_20260723051944_departmantablosunuayir_designer",
+      "userapp_data_migrations_20260723051944_departmantablosunuayir_designer_cs_modelbuilder",
+      "userapp_data_migrations_20260723051944_departmantablosunuayir_designer_userapp_data_migrations_departmantablosunuayir",
+      "userapp_data_migrations_20260723051944_departmantablosunuayir_designer_userapp_data_migrations_departmantablosunuayir_buildtargetmodel",
+      "userapp_data_migrations_20260723051944_departmantablosunuayir_userapp_data_migrations_departmantablosunuayir_down",
+      "userapp_data_migrations_20260723051944_departmantablosunuayir_userapp_data_migrations_departmantablosunuayir_up"
+    ],
+    "14": [
+      "userapp_data_migrations_20260724071804_dahafazladepartman",
+      "userapp_data_migrations_20260724071804_dahafazladepartman_cs_migrationbuilder",
+      "userapp_data_migrations_20260724071804_dahafazladepartman_designer",
+      "userapp_data_migrations_20260724071804_dahafazladepartman_designer_cs_modelbuilder",
+      "userapp_data_migrations_20260724071804_dahafazladepartman_designer_userapp_data_migrations_dahafazladepartman",
+      "userapp_data_migrations_20260724071804_dahafazladepartman_designer_userapp_data_migrations_dahafazladepartman_buildtargetmodel",
+      "userapp_data_migrations_20260724071804_dahafazladepartman_userapp_data_migrations_dahafazladepartman_down",
+      "userapp_data_migrations_20260724071804_dahafazladepartman_userapp_data_migrations_dahafazladepartman_up"
+    ],
+    "15": [
+      "migration",
+      "userapp_data_migrations_20260730080927_addusernewfeatures",
+      "userapp_data_migrations_20260730080927_addusernewfeatures_cs_migrationbuilder",
+      "userapp_data_migrations_20260730080927_addusernewfeatures_designer",
+      "userapp_data_migrations_20260730080927_addusernewfeatures_designer_cs_modelbuilder",
+      "userapp_data_migrations_20260730080927_addusernewfeatures_designer_userapp_data_migrations_addusernewfeatures",
+      "userapp_data_migrations_20260730080927_addusernewfeatures_designer_userapp_data_migrations_addusernewfeatures_buildtargetmodel",
+      "userapp_data_migrations_20260730080927_addusernewfeatures_userapp_data_migrations_addusernewfeatures_down",
+      "userapp_data_migrations_20260730080927_addusernewfeatures_userapp_data_migrations_addusernewfeatures_up"
+    ],
+    "16": [
+      "userapp_data_migrations_20260730124552_addkayittarihi",
+      "userapp_data_migrations_20260730124552_addkayittarihi_cs_migrationbuilder",
+      "userapp_data_migrations_20260730124552_addkayittarihi_designer",
+      "userapp_data_migrations_20260730124552_addkayittarihi_designer_cs_modelbuilder",
+      "userapp_data_migrations_20260730124552_addkayittarihi_designer_userapp_data_migrations_addkayittarihi",
+      "userapp_data_migrations_20260730124552_addkayittarihi_designer_userapp_data_migrations_addkayittarihi_buildtargetmodel",
+      "userapp_data_migrations_20260730124552_addkayittarihi_userapp_data_migrations_addkayittarihi_down",
+      "userapp_data_migrations_20260730124552_addkayittarihi_userapp_data_migrations_addkayittarihi_up"
+    ],
+    "17": [
+      "userapp_data_migrations_20260731071054_addprofileimagepath",
+      "userapp_data_migrations_20260731071054_addprofileimagepath_cs_migrationbuilder",
+      "userapp_data_migrations_20260731071054_addprofileimagepath_designer",
+      "userapp_data_migrations_20260731071054_addprofileimagepath_designer_cs_modelbuilder",
+      "userapp_data_migrations_20260731071054_addprofileimagepath_designer_userapp_data_migrations_addprofileimagepath",
+      "userapp_data_migrations_20260731071054_addprofileimagepath_designer_userapp_data_migrations_addprofileimagepath_buildtargetmodel",
+      "userapp_data_migrations_20260731071054_addprofileimagepath_userapp_data_migrations_addprofileimagepath_down",
+      "userapp_data_migrations_20260731071054_addprofileimagepath_userapp_data_migrations_addprofileimagepath_up"
+    ],
+    "18": [
+      "userapp_data_migrations_20260802163633_addidentitytables",
+      "userapp_data_migrations_20260802163633_addidentitytables_cs_migrationbuilder",
+      "userapp_data_migrations_20260802163633_addidentitytables_designer",
+      "userapp_data_migrations_20260802163633_addidentitytables_designer_cs_modelbuilder",
+      "userapp_data_migrations_20260802163633_addidentitytables_designer_userapp_data_migrations_addidentitytables",
+      "userapp_data_migrations_20260802163633_addidentitytables_designer_userapp_data_migrations_addidentitytables_buildtargetmodel",
+      "userapp_data_migrations_20260802163633_addidentitytables_userapp_data_migrations_addidentitytables_down",
+      "userapp_data_migrations_20260802163633_addidentitytables_userapp_data_migrations_addidentitytables_up"
+    ],
+    "19": [
+      "ienumerable",
+      "userapp_services_serviceresult",
+      "userapp_services_serviceresult_cs_list",
+      "userapp_services_serviceresult_userapp_services_serviceresult",
+      "userapp_services_serviceresult_userapp_services_serviceresult_fail",
+      "userapp_services_serviceresult_userapp_services_serviceresult_ok"
+    ],
+    "20": [
+      "modelsnapshot",
+      "userapp_data_migrations_appdbcontextmodelsnapshot",
+      "userapp_data_migrations_appdbcontextmodelsnapshot_cs_modelbuilder",
+      "userapp_data_migrations_appdbcontextmodelsnapshot_userapp_data_migrations_appdbcontextmodelsnapshot",
+      "userapp_data_migrations_appdbcontextmodelsnapshot_userapp_data_migrations_appdbcontextmodelsnapshot_buildmodel"
+    ],
+    "21": [
+      "userapp_services_userapp_services_ifilehelper",
+      "userapp_services_userapp_services_ifilehelper_cs_iformfile",
+      "userapp_services_userapp_services_ifilehelper_cs_task",
+      "userapp_services_userapp_services_ifilehelper_userapp_services_ifilehelper",
+      "userapp_services_userapp_services_ifilehelper_userapp_services_ifilehelper_uploadimageasync"
+    ],
+    "22": [
+      "userapp_web_models",
+      "userapp_web_views_viewimports"
+    ],
+    "23": [
+      "userapp_web_models_loginviewmodel",
+      "userapp_web_views_account_login"
+    ],
+    "24": [
+      "userapp_web_views_home_create",
+      "userapp_web_views_home_create_cshtml_userapp_entities_dtos_kullanicicreatedto"
+    ],
+    "25": [
+      "userapp_web_views_home_delete",
+      "userapp_web_views_home_delete_cshtml_userapp_entities_dtos_kullanicidetaildto"
+    ],
+    "26": [
+      "userapp_web_views_home_details",
+      "userapp_web_views_home_details_cshtml_userapp_entities_dtos_kullanicidetaildto"
+    ],
+    "27": [
+      "userapp_web_views_home_edit",
+      "userapp_web_views_home_edit_cshtml_userapp_entities_dtos_kullanicieditdto"
+    ],
+    "28": [
+      "userapp_web_wwwroot_js_kullanici_datatable",
+      "userapp_web_wwwroot_js_kullanici_datatable_kullanicitablemodule"
+    ],
+    "29": [
+      "dbcontext"
+    ],
+    "30": [
+      "httpget"
+    ],
+    "31": [
+      "httppost"
+    ],
+    "32": [
+      "iactionresult"
+    ],
+    "33": [
+      "soneklenenadsoyad"
+    ],
+    "34": [
+      "userapp_entities_dtos_kullanicieditdto_cs_iformfile"
+    ],
+    "35": [
+      "userapp_services_ifilehelper"
+    ],
+    "36": [
+      "userapp_web_controllers_homecontroller_cs_int"
+    ],
+    "37": [
+      "userapp_web_views_account_accessdenied"
+    ],
+    "38": [
+      "userapp_web_views_home_index"
+    ],
+    "39": [
+      "userapp_web_views_home_privacy"
+    ],
+    "40": [
+      "userapp_web_views_shared_error"
+    ],
+    "41": [
+      "userapp_web_views_shared_layout"
+    ],
+    "42": [
+      "userapp_web_views_shared_validationscriptspartial"
+    ],
+    "43": [
+      "userapp_web_views_viewstart"
+    ],
+    "44": [
+      "userapp_web_wwwroot_js_site"
+    ],
+    "45": [
+      "validateantiforgerytoken"
+    ]
+  },
+  "cohesion": {
+    "0": 0.09634551495016612,
+    "1": 0.06707317073170732,
+    "2": 0.09024390243902439,
+    "3": 0.11428571428571428,
+    "4": 0.14210526315789473,
+    "5": 0.20588235294117646,
+    "6": 0.13333333333333333,
+    "7": 0.23076923076923078,
+    "8": 0.2,
+    "9": 0.2777777777777778,
+    "10": 0.2857142857142857,
+    "11": 0.2857142857142857,
+    "12": 0.2857142857142857,
+    "13": 0.2857142857142857,
+    "14": 0.2857142857142857,
+    "15": 0.25,
+    "16": 0.2857142857142857,
+    "17": 0.2857142857142857,
+    "18": 0.2857142857142857,
+    "19": 0.3333333333333333,
+    "20": 0.4,
+    "21": 0.4,
+    "22": 1.0,
+    "23": 1.0,
+    "24": 1.0,
+    "25": 1.0,
+    "26": 1.0,
+    "27": 1.0,
+    "28": 1.0,
+    "29": 1.0,
+    "30": 1.0,
+    "31": 1.0,
+    "32": 1.0,
+    "33": 1.0,
+    "34": 1.0,
+    "35": 1.0,
+    "36": 1.0,
+    "37": 1.0,
+    "38": 1.0,
+    "39": 1.0,
+    "40": 1.0,
+    "41": 1.0,
+    "42": 1.0,
+    "43": 1.0,
+    "44": 1.0,
+    "45": 1.0
+  },
+  "gods": [
+    {
+      "id": "csharp_namespace:29e206a5e3ea29ec",
+      "label": "UserApp.Data.Migrations",
+      "degree": 21
+    },
+    {
+      "id": "csharp_namespace:c8fdb2c014c1ea78",
+      "label": "UserApp.Data",
+      "degree": 18
+    },
+    {
+      "id": "userapp_services_userservice_userapp_services_userservice",
+      "label": "UserService",
+      "degree": 14
+    },
+    {
+      "id": "userapp_web_controllers_homecontroller_userapp_web_controllers_homecontroller",
+      "label": "HomeController",
+      "degree": 14
+    },
+    {
+      "id": "csharp_namespace:74668ced5594152c",
+      "label": "UserApp.Entities",
+      "degree": 13
+    },
+    {
+      "id": "userapp_services_iuserservice_userapp_services_iuserservice",
+      "label": "IUserService",
+      "degree": 12
+    },
+    {
+      "id": "csharp_namespace:1eb40bf1b78170fb",
+      "label": "UserApp.Entities.Dtos",
+      "degree": 11
+    },
+    {
+      "id": "userapp_data_ikullanicirepository_userapp_data_ikullanicirepository",
+      "label": "IKullaniciRepository",
+      "degree": 11
+    },
+    {
+      "id": "userapp_data_kullanicirepository_userapp_data_kullanicirepository",
+      "label": "KullaniciRepository",
+      "degree": 11
+    },
+    {
+      "id": "userapp_data_appdbcontext_userapp_data_appdbcontext",
+      "label": "AppDbContext",
+      "degree": 9
+    }
+  ],
+  "surprises": [
+    {
+      "source": "KullaniciEditDtoValidator",
+      "target": "KullaniciEditDto",
+      "source_files": [
+        "UserApp.Services/Validation/KullaniciEditDtoValidator.cs",
+        "UserApp.Entities/Dtos/KullaniciEditDto.cs"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "KullaniciListViewModel",
+      "target": "KullaniciListItemDto",
+      "source_files": [
+        "UserApp.Data/UserApp.Web/Models/KullaniciListViewModel.cs",
+        "UserApp.Entities/Dtos/KullaniciListItemDto.cs"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories"
+    },
+    {
+      "source": "KullaniciCreateDtoValidator",
+      "target": "KullaniciCreateDto",
+      "source_files": [
+        "UserApp.Services/Validation/KullaniciCreateDtoValidator.cs",
+        "UserApp.Entities/Dtos/KullaniciCreateDto.cs"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories"
+    },
+    {
+      "source": "UserApp.Services",
+      "target": "net10.0",
+      "source_files": [
+        "UserApp.Services/UserApp.Services.csproj",
+        "UserApp.Data/UserApp.Data.csproj"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories"
+    },
+    {
+      "source": "UserApp.Web",
+      "target": "net10.0",
+      "source_files": [
+        "UserApp.Web/UserApp.Web.csproj",
+        "UserApp.Data/UserApp.Data.csproj"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `UserApp.Data` connect `UserApp.Data` to `UserApp.Data.Migrations`, `AddValidationRules`, `InitialCreate`, `AddDepartmanColumn`, `DepartmanTablosunuAyir`, `DahaFazlaDepartman`, `Migration`, `AddKayitTarihi`, `AddProfileImagePath`, `AddIdentityTables`, `AppDbContextModelSnapshot.cs`?",
+      "why": "High betweenness centrality (0.305) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `UserService` connect `UserService` to `HomeController`, `UserApp.Data`?",
+      "why": "High betweenness centrality (0.170) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `UserApp.Entities` connect `UserApp.Data` to `AccountController`?",
+      "why": "High betweenness centrality (0.135) - this node is a cross-community bridge."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `FluentValidation (12.1.1)`, `ErrorViewModel`, `$schema` to the rest of the system?",
+      "why": "25 weakly-connected nodes found - possible documentation gaps or missing edges."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `HomeController` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.09634551495016612 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `UserApp.Data` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.06707317073170732 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `UserService` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.09024390243902439 - nodes in this community are weakly interconnected."
+    }
+  ]
+}
